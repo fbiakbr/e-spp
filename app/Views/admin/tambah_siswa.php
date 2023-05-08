@@ -37,6 +37,9 @@
                                         <div class="position-relative">
                                             <select class="form-select" id="kelas" name="kelas" required>
                                                 <option value="">Pilih Kelas</option>
+                                                <?php usort($kelas, function ($a, $b) {
+                                                    return $a['nama_kelas'] <=> $b['nama_kelas'];
+                                                }); ?>
                                                 <?php foreach ($kelas as $k) : ?>
                                                     <option value="<?= $k['id_kelas']; ?>"><?= $k['nama_kelas']; ?></option>
                                                 <?php endforeach; ?>

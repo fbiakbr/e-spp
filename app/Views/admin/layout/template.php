@@ -78,6 +78,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="<?= base_url('/admin/input_pembayaran') ?>" class="sidebar-link">
+                                <i class="bi bi-file-earmark-diff-fill"></i>
+                                <span>Input Pembayaran</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

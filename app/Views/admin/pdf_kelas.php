@@ -23,11 +23,14 @@
                 </thead>
                 <tbody>
                     <?php $no = 1;
+                    usort($kelas, function ($a, $b) {
+                        return $a['nama_kelas'] <=> $b['nama_kelas'];
+                    });
                     foreach ($kelas as $k) : ?>
                         <tr>
                             <td class="text-center"><?= $no++; ?></td>
                             <td><?= $k['nama_kelas']; ?></td>
-                            <td><?= "Rp. " . number_format($k['tagihan'], 0, ',', '.'); ?></td>
+                            <td><?= $k['tagihan']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -143,7 +143,6 @@ class Admin extends BaseController
             $d['kelas'] = $kelas->where('nama_kelas', $d['kelas'])->first()['id_kelas'];
             $d['tanggal_lahir'] = date('Y-m-d', strtotime($d['tanggal_lahir']));
             $siswa = new Siswa();
-            // check nis
             $check = $siswa->where('nis', $d['nis'])->first();
             if ($check) {
                 $siswa->save([
@@ -260,5 +259,16 @@ class Admin extends BaseController
         $dompdf->setPaper('A4', 'potrait');
         $dompdf->render();
         $dompdf->stream($filename, ['Attachment' => false]);
+    }
+    public function input_pembayaran()
+    {
+        $siswa = new Siswa();
+        $kelas = new Kelas();
+        $data = [
+            'title' => 'Input Pembayaran',
+            'siswa' => $siswa->findAll(),
+            'kelas' => $kelas->findAll(),
+        ];
+        return view('admin/input_pembayaran', $data);
     }
 }
