@@ -13,7 +13,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="nis">NIS</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="NIS" id="nis" name="nis" min="0" required />
+                                            <input type="text" class="form-control" placeholder="NIS" id="nis" name="nis" min="0" autofocus required />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-lock"></i>
                                             </div>
@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group has-icon-left">
-                                        <label for="nis">Nama Siswa</label>
+                                        <label for="nama_siswa">Nama Siswa</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" placeholder="Nama Siswa" id="nama_siswa" name="nama_siswa" readonly required />
                                             <div class="form-control-icon">
@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group has-icon-left">
-                                        <label for="nis">Kelas</label>
+                                        <label for="kelas">Kelas</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" placeholder="Kelas" id="kelas" name="kelas" readonly required />
                                             <div class="form-control-icon">
@@ -46,20 +46,9 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group has-icon-left">
-                                        <label for="nis">Tagihan</label>
+                                        <label for="tanggal">Tanggal Pembayaran</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Tagihan" id="tagihan" name="tagihan" readonly required />
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-currency-dollar"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group has-icon-left">
-                                        <label for="nis">Tanggal</label>
-                                        <div class="position-relative">
-                                            <input type="date" class="form-control" id="tanggal" name="tanggal" readonly required />
+                                            <input type="date" class="form-control" id="tanggal" name="tanggal_pembayaran" readonly required />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-calendar-date"></i>
                                             </div>
@@ -68,7 +57,32 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group has-icon-left">
-                                        <label for="nis">Jam</label>
+                                        <label for="bulan">Bulan</label>
+                                        <div class="position-relative">
+                                            <select name="bulan" class="form-control form-select" id="bulan" required>
+                                                <option value="">Pilih Bulan</option>
+                                                <option value="JANUARI">JANUARI</option>
+                                                <option value="FEBRUARI">FEBRUARI</option>
+                                                <option value="MARET">MARET</option>
+                                                <option value="APRIL">APRIL</option>
+                                                <option value="MEI">MEI</option>
+                                                <option value="JUNI">JUNI</option>
+                                                <option value="JULI">JULI</option>
+                                                <option value="AGUSTUS">AGUSTUS</option>
+                                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                                <option value="OKTOBER">OKTOBER</option>
+                                                <option value="NOVEMBER">NOVEMBER</option>
+                                                <option value="DESEMBER">DESEMBER</option>
+                                            </select>
+                                            <div class="form-control-icon">
+                                                <i class="bi  bi-calendar-week"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group has-icon-left">
+                                        <label for="jam">Jam</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" id="jam" name="jam" readonly required />
                                             <div class="form-control-icon">
@@ -79,9 +93,20 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
-                                        <label for="nis">Jumlah Bayar</label>
+                                        <label for="tagihan">Tagihan</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control" placeholder="Tagihan" id="tagihan" name="tagihan" readonly required />
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-currency-dollar"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group has-icon-left">
+                                        <label for="jumlah_bayar">Jumlah Bayar</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" min="0" required />
                                             <div class="form-control-icon">
@@ -90,9 +115,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
-                                        <label for="nis">Sisa Tagihan</label>
+                                        <label for="sisa_tagihan">Sisa Tagihan</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" placeholder="0" id="sisa_tagihan" name="sisa_tagihan" readonly required />
                                             <div class="form-control-icon">
@@ -101,7 +126,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group has-icon-left">
+                                        <label for="kembalian">Kembalian</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control" placeholder="0" id="kembalian" name="kembalian" readonly required />
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-currency-dollar"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary me-1 mb-1">Bayar</button>
                         </div>
                     </form>
                 </div>
@@ -154,13 +193,13 @@
     data_siswa.forEach((siswa) => {
         data_kelas.forEach((kelas) => {
             if (siswa.kelas == kelas.id_kelas) {
-                kelas.tagihan = "Rp " + kelas.tagihan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                kelas.tagihan = kelas.tagihan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                 kelas.tagihan = kelas.tagihan.replace(",00", "");
                 data.push({
                     nis: siswa.nis,
                     nama_siswa: siswa.nama_siswa,
                     kelas: kelas.nama_kelas,
-                    tagihan: kelas.tagihan
+                    tagihan: "Rp " + kelas.tagihan
                 });
             }
         });
@@ -189,7 +228,6 @@
     });
 
     function formatRupiah(angka, prefix) {
-        // convert to rupiah
         let number_string = angka.replace(/[^,\d]/g, '').toString(),
             split = number_string.split(','),
             sisa = split[0].length % 3,
@@ -206,34 +244,45 @@
     }
 
     let sisa_tagihan = document.getElementById('sisa_tagihan');
+    let kembalian = document.getElementById('kembalian');
     jumlah_bayar.addEventListener('keyup', () => {
         let jumlah_bayarValue = jumlah_bayar.value;
         let tagihanValue = tagihan.value;
 
-        let jumlah_bayarValueIDR = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR'
-        }).format(jumlah_bayarValue);
-
         let tagihanValueNumber = tagihanValue.replace('Rp', '');
-        tagihanValueNumber = tagihanValueNumber.replace('.', '');
-        tagihanValueNumber = parseInt(tagihanValueNumber);
+        tagihanValueNumber = tagihanValueNumber.replace(/\./g, '');
+        console.log(tagihanValueNumber);
 
         let jumlah_bayarValueNumber = jumlah_bayarValue.replace('Rp', '');
-        jumlah_bayarValueNumber = jumlah_bayarValueNumber.replace('.', '');
-        jumlah_bayarValueNumber = parseInt(jumlah_bayarValueNumber);
+        jumlah_bayarValueNumber = jumlah_bayarValueNumber.replace(/\./g, '');
+        console.log(jumlah_bayarValueNumber);
 
         let sisa_tagihanValue = tagihanValueNumber - jumlah_bayarValueNumber;
-        let sisa_tagihanValueIDR = new Intl.NumberFormat('id-ID', {
+        console.log(sisa_tagihanValue);
+
+        sisa_tagihanValue = "Rp " + sisa_tagihanValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        sisa_tagihan.value = sisa_tagihanValue;
+
+        let kembalianValue = jumlah_bayarValueNumber - tagihanValueNumber;
+        let kembalianValueIDR = new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR'
-        }).format(sisa_tagihanValue);
-        sisa_tagihanValueIDR = sisa_tagihanValueIDR.replace(",00", "");
-        sisa_tagihan.value = sisa_tagihanValueIDR;
+        }).format(kembalianValue);
+        kembalianValueIDR = kembalianValueIDR.replace(",00", "");
+        kembalian.value = kembalianValueIDR;
+
         if (nis.value == '') {
             sisa_tagihan.value = '';
         } else if (jumlah_bayarValue == '') {
-            sisa_tagihan.value = '';
+            sisa_tagihan.value = 'Rp 0';
+            kembalian.value = 'Rp 0';
+        } else if (sisa_tagihanValue < 0) {
+            sisa_tagihan.value = 'Rp 0';
+        } else if (kembalianValue < 0) {
+            kembalian.value = 'Rp 0';
+        } else if (jumlah_bayarValue >= tagihanValueNumber) {
+            sisa_tagihan.value = 'Rp 0';
+            kembalian.value = kembalianValueIDR;
         }
     });
 </script>

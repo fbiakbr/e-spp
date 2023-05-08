@@ -76,6 +76,9 @@
                                 <li class="submenu-item">
                                     <a href="<?= base_url('/admin/data_kelas') ?>" class="submenu-link">Data Kelas</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="<?= base_url('/admin/data_pembayaran') ?>" class="submenu-link">Data Pembayaran</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item">

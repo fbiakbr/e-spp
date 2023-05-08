@@ -5,10 +5,11 @@ namespace App\Controllers;
 use Dompdf\Dompdf;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\Pembayaran;
 use App\Controllers\BaseController;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as ReaderXlsx;
 
 class Admin extends BaseController
@@ -270,5 +271,56 @@ class Admin extends BaseController
             'kelas' => $kelas->findAll(),
         ];
         return view('admin/input_pembayaran', $data);
+    }
+    public function data_pembayaran()
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'title' => 'Data Pembayaran',
+            'pembayaran' => $pembayaran->findAll(),
+        ];
+        return view('admin/data_pembayaran', $data);
+    }
+    public function save_pembayaran()
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'nis' => $this->request->getVar('nis'),
+            'nama_siswa' => $this->request->getVar('nama_siswa'),
+            'kelas' => $this->request->getVar('kelas'),
+            'tagihan' => $this->request->getVar('tagihan'),
+            'bulan' => $this->request->getVar('bulan'),
+            'tanggal_pembayaran' => $this->request->getVar('tanggal_pembayaran'),
+            'jam' => $this->request->getVar('jam'),
+            'jumlah_bayar' => $this->request->getVar('jumlah_bayar'),
+            'sisa_tagihan' => $this->request->getVar('sisa_tagihan'),
+            'kembalian' => $this->request->getVar('kembalian'),
+            'status_pembayaran' => $this->request->getVar('status_pembayaran'),
+        ];
+        $data['tagihan'] = str_replace('Rp ', '', $data['tagihan']);
+        $data['tagihan'] = str_replace('.', '', $data['tagihan']);
+
+        $data['jumlah_bayar'] = str_replace('Rp ', '', $data['jumlah_bayar']);
+        $data['jumlah_bayar'] = str_replace('.', '', $data['jumlah_bayar']);
+
+        $data['sisa_tagihan'] = str_replace('Rp ', '', $data['sisa_tagihan']);
+        $data['sisa_tagihan'] = str_replace('.', '', $data['sisa_tagihan']);
+
+        $data['kembalian'] = str_replace('Rp ', '', $data['kembalian']);
+        $data['kembalian'] = str_replace('.', '', $data['kembalian']);
+
+        $data['tagihan'] = (int)$data['tagihan'];
+        $data['jumlah_bayar'] = (int)$data['jumlah_bayar'];
+        $data['sisa_tagihan'] = (int)$data['sisa_tagihan'];
+        $data['kembalian'] = (int)$data['kembalian'];
+
+        if ($data['sisa_tagihan'] !== 0) {
+            $data['status_pembayaran'] = 'Belum Lunas';
+        } else {
+            $data['status_pembayaran'] = 'Lunas';
+        }
+        $pembayaran->insert($data);
+        session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
+        return redirect()->to(base_url('admin/data_pembayaran'));
     }
 }
