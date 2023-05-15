@@ -6,14 +6,14 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form form-vertical" action="<?= base_url('/admin/save_pembayaran') ?>" method="post">
+                    <form class="form form-vertical" action="<?= base_url('/admin/update_pembayaran/') ?><?= $pembayaran['id_pembayaran'] ?>" method="post">
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group has-icon-left">
                                         <label for="nis">NIS</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="NIS" id="nis" name="nis" min="0" autofocus required />
+                                            <input type="text" class="form-control" placeholder="NIS" id="nis" name="nis" min="0" value="<?= $pembayaran['nis'] ?>" required readonly />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-lock"></i>
                                             </div>
@@ -24,7 +24,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="nama_siswa">Nama Siswa</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Nama Siswa" id="nama_siswa" name="nama_siswa" readonly required />
+                                            <input type="text" class="form-control" placeholder="Nama Siswa" id="nama_siswa" value="<?= $pembayaran['nama_siswa'] ?>" name="nama_siswa" readonly required />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
                                             </div>
@@ -35,7 +35,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="kelas">Kelas</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Kelas" id="kelas" name="kelas" readonly required />
+                                            <input type="text" class="form-control" placeholder="Kelas" id="kelas" name="kelas" value="<?= $pembayaran['kelas'] ?>" readonly required />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-building"></i>
                                             </div>
@@ -48,7 +48,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="tanggal">Tanggal Pembayaran</label>
                                         <div class="position-relative">
-                                            <input type="date" class="form-control" id="tanggal" name="tanggal_pembayaran" readonly required />
+                                            <input type="date" class="form-control" id="tanggal" name="tanggal_pembayaran" value="<?= $pembayaran['tanggal_pembayaran'] ?>" readonly required />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-calendar-date"></i>
                                             </div>
@@ -60,19 +60,30 @@
                                         <label for="bulan">Bulan</label>
                                         <div class="position-relative">
                                             <select name="bulan" class="form-control form-select" id="bulan" required>
-                                                <option value="">Pilih Bulan</option>
-                                                <option value="JANUARI">JANUARI</option>
-                                                <option value="FEBRUARI">FEBRUARI</option>
-                                                <option value="MARET">MARET</option>
-                                                <option value="APRIL">APRIL</option>
-                                                <option value="MEI">MEI</option>
-                                                <option value="JUNI">JUNI</option>
-                                                <option value="JULI">JULI</option>
-                                                <option value="AGUSTUS">AGUSTUS</option>
-                                                <option value="SEPTEMBER">SEPTEMBER</option>
-                                                <option value="OKTOBER">OKTOBER</option>
-                                                <option value="NOVEMBER">NOVEMBER</option>
-                                                <option value="DESEMBER">DESEMBER</option>
+                                                <?php
+                                                $bulan = $pembayaran['bulan'];
+                                                $arr_bulan = array(
+                                                    'JANUARI',
+                                                    'FEBRUARI',
+                                                    'MARET',
+                                                    'APRIL',
+                                                    'MEI',
+                                                    'JUNI',
+                                                    'JULI',
+                                                    'AGUSTUS',
+                                                    'SEPTEMBER',
+                                                    'OKTOBER',
+                                                    'NOVEMBER',
+                                                    'DESEMBER'
+                                                );
+                                                for ($i = 0; $i < count($arr_bulan); $i++) {
+                                                    if ($arr_bulan[$i] == $bulan) {
+                                                        echo "<option value='$arr_bulan[$i]' selected>$arr_bulan[$i]</option>";
+                                                    } else {
+                                                        echo "<option value='$arr_bulan[$i]'>$arr_bulan[$i]</option>";
+                                                    }
+                                                }
+                                                ?>
                                             </select>
                                             <div class="form-control-icon">
                                                 <i class="bi  bi-calendar-week"></i>
@@ -84,7 +95,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="jam">Jam</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" id="jam" name="jam" readonly required />
+                                            <input type="text" class="form-control" id="jam" name="jam" readonly required value="<?= $pembayaran['jam'] ?>" />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-clock"></i>
                                             </div>
@@ -97,7 +108,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="tagihan">Tagihan</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Tagihan" id="tagihan" name="tagihan" readonly required />
+                                            <input type="text" class="form-control" placeholder="Tagihan" id="tagihan" name="tagihan" value="<?= 'Rp ' . number_format($pembayaran['tagihan'], 0, ',', '.') ?>" readonly required />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-currency-dollar"></i>
                                             </div>
@@ -108,7 +119,7 @@
                                     <div class="form-group has-icon-left">
                                         <label for="jumlah_bayar">Jumlah Bayar</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" min="0" required />
+                                            <input type="text" class="form-control" id="jumlah_bayar" name="jumlah_bayar" min="0" required autofocus />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-currency-dollar"></i>
                                             </div>
@@ -149,38 +160,6 @@
     </div>
 </div>
 <script>
-    let date = new Date();
-    let day = date.getDate();
-    if (day < 10) {
-        day = '0' + day;
-    }
-    let month = date.getMonth() + 1;
-    if (month < 10) {
-        month = '0' + month;
-    }
-    let year = date.getFullYear();
-    let tanggal = year + '-' + month + '-' + day;
-    let tanggalInput = document.getElementById('tanggal');
-    tanggalInput.value = tanggal;
-    setInterval(() => {
-        let date = new Date();
-        let hour = date.getHours();
-        if (hour < 10) {
-            hour = '0' + hour;
-        }
-        let minute = date.getMinutes();
-        if (minute < 10) {
-            minute = '0' + minute;
-        }
-        let second = date.getSeconds();
-        if (second < 10) {
-            second = '0' + second;
-        }
-        let jam = hour + ':' + minute + ':' + second;
-        let jamInput = document.getElementById('jam');
-        jamInput.value = jam;
-    }, 100)
-
     let nis = document.getElementById('nis');
     let nama_siswa = document.getElementById('nama_siswa');
     let kelas = document.getElementById('kelas');
@@ -189,7 +168,6 @@
     let data_kelas = <?= json_encode($kelas) ?>;
 
     let data = [];
-    // change tagihan to idr format
     data_siswa.forEach((siswa) => {
         data_kelas.forEach((kelas) => {
             if (siswa.kelas == kelas.id_kelas) {

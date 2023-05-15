@@ -14,10 +14,14 @@
                 <a href="<?= base_url('/admin/tambah_siswa') ?>" class="btn btn-primary mb-3">Tambah Siswa</a>
                 <a href="<?= base_url('/admin/import_siswa') ?>" class="btn btn-success mb-3">Import Siswa</a>
                 <a href="<?= base_url('/admin/pdf_siswa') ?>" class="btn btn-dark mb-3">Export PDF</a>
-                <div class="row table-responsive">
+                <div class="row">
+                    <p class="fst-italic"><small class="text-danger">* Mohon untuk tidak menghapus data siswa yang sudah ada, karena data siswa yang sudah ada akan digunakan untuk pembayaran.</small></p>
+                    <p class="fst-italic"><small class="text-danger">* Jika ada kesalahan dalam penginputan data siswa, silahkan edit data siswa yang bersangkutan.</small></p>
+                </div>
+                <div class="row table-responsive pb-3">
                     <table class="table table-bordered" id="table1">
                         <thead>
-                            <tr>
+                            <tr style="width: 1%; white-space: nowrap;">
                                 <th>No</th>
                                 <th>NIS</th>
                                 <th>Nama</th>
@@ -31,7 +35,7 @@
                         <tbody>
                             <?php $no = 1;
                             foreach ($siswa as $s) : ?>
-                                <tr>
+                                <tr style="width: 1%; white-space: nowrap;">
                                     <td class="text-center"><?= $no++; ?></td>
                                     <td><?= $s['nis']; ?></td>
                                     <td><?= $s['nama_siswa']; ?></td>

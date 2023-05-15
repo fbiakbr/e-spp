@@ -29,7 +29,7 @@
                                 <tr>
                                     <td class="text-center"><?= $no++; ?></td>
                                     <td><?= $k['nama_kelas']; ?></td>
-                                    <td><?= "Rp. " . number_format($k['tagihan'], 0, ',', '.'); ?></td>
+                                    <td><?= "Rp " . number_format($k['tagihan'], 0, ',', '.'); ?></td>
                                     <td class="text-center" width="10%">
                                         <a href="<?= base_url('/admin/edit_kelas/' . $k['id_kelas']) ?>" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a>
                                         <a href="<?= base_url('/admin/hapus_kelas/' . $k['id_kelas']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="bi bi-trash"></i></a>

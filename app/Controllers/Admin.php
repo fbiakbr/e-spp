@@ -16,8 +16,15 @@ class Admin extends BaseController
 {
     public function index()
     {
+        $kelas = new Kelas();
+        $siswa = new Siswa();
+        $pembayaran = new Pembayaran();
         $data = [
             'title' => 'Dashboard',
+            'jumlah_kelas' => $kelas->countAllResults(),
+            'jumlah_siswa' => $siswa->countAllResults(),
+            'jumlah_pembayaran' => $pembayaran->countAllResults(),
+            'jumlah_angsuran' => $pembayaran->where('status_pembayaran', 'BELUM LUNAS')->countAllResults(),
         ];
         return view('admin/index', $data);
     }
@@ -110,11 +117,11 @@ class Admin extends BaseController
         ];
         return view('/admin/import_siswa', $data);
     }
-    // public function format_excel()
-    // {
-    //     $file = 'format_excel.xlsx';
-    //     return $this->response->download('format_excel.xlsx', null);
-    // }
+    public function format_excel()
+    {
+        $file = './format/format_siswa.xlsx';
+        return $this->response->download($file, null);
+    }
     public function import_excel_siswa()
     {
         $excel = $this->request->getFile('file_excel');
@@ -315,12 +322,102 @@ class Admin extends BaseController
         $data['kembalian'] = (int)$data['kembalian'];
 
         if ($data['sisa_tagihan'] !== 0) {
-            $data['status_pembayaran'] = 'Belum Lunas';
+            $data['status_pembayaran'] = 'BELUM LUNAS';
         } else {
-            $data['status_pembayaran'] = 'Lunas';
+            $data['status_pembayaran'] = 'LUNAS';
         }
+        // dd($data);
         $pembayaran->insert($data);
         session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
         return redirect()->to(base_url('admin/data_pembayaran'));
+    }
+    public function hapus_pembayaran($id_pembayaran)
+    {
+        $pembayaran = new Pembayaran();
+        $pembayaran->where('id_pembayaran', $id_pembayaran);
+        $pembayaran->delete();
+        session()->setFlashdata('pesan', 'Data berhasil dihapus.');
+        return redirect()->to(base_url('admin/data_pembayaran'));
+    }
+    public function edit_pembayaran($id_pembayaran)
+    {
+        $pembayaran = new Pembayaran();
+        $siswa = new Siswa();
+        $kelas = new Kelas();
+        $data = [
+            'title' => 'Edit Pembayaran',
+            'pembayaran' => $pembayaran->where('id_pembayaran', $id_pembayaran)->first(),
+            'siswa' => $siswa->findAll(),
+            'kelas' => $kelas->findAll(),
+        ];
+        return view('/admin/edit_pembayaran', $data);
+    }
+    public function update_pembayaran($id_pembayaran)
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'id_pembayaran' => $id_pembayaran,
+            'nis' => $this->request->getVar('nis'),
+            'nama_siswa' => $this->request->getVar('nama_siswa'),
+            'kelas' => $this->request->getVar('kelas'),
+            'tagihan' => $this->request->getVar('tagihan'),
+            'bulan' => $this->request->getVar('bulan'),
+            'tanggal_pembayaran' => $this->request->getVar('tanggal_pembayaran'),
+            'jam' => $this->request->getVar('jam'),
+            'jumlah_bayar' => $this->request->getVar('jumlah_bayar'),
+            'sisa_tagihan' => $this->request->getVar('sisa_tagihan'),
+            'kembalian' => $this->request->getVar('kembalian'),
+            'status_pembayaran' => $this->request->getVar('status_pembayaran'),
+        ];
+        $data['tagihan'] = str_replace('Rp ', '', $data['tagihan']);
+        $data['tagihan'] = str_replace('.', '', $data['tagihan']);
+
+        $data['jumlah_bayar'] = str_replace('Rp ', '', $data['jumlah_bayar']);
+        $data['jumlah_bayar'] = str_replace('.', '', $data['jumlah_bayar']);
+
+        $data['sisa_tagihan'] = str_replace('Rp ', '', $data['sisa_tagihan']);
+        $data['sisa_tagihan'] = str_replace('.', '', $data['sisa_tagihan']);
+
+        $data['kembalian'] = str_replace('Rp ', '', $data['kembalian']);
+        $data['kembalian'] = str_replace('.', '', $data['kembalian']);
+
+        $data['tagihan'] = (int)$data['tagihan'];
+        $data['jumlah_bayar'] = (int)$data['jumlah_bayar'];
+        $data['sisa_tagihan'] = (int)$data['sisa_tagihan'];
+        $data['kembalian'] = (int)$data['kembalian'];
+
+        if ($data['sisa_tagihan'] !== 0) {
+            $data['status_pembayaran'] = 'BELUM LUNAS';
+        } else {
+            $data['status_pembayaran'] = 'LUNAS';
+        }
+        // dd($data);
+        $pembayaran->save($data);
+        session()->setFlashdata('pesan', 'Data berhasil diubah.');
+        return redirect()->to(base_url('admin/data_pembayaran'));
+    }
+    public function pdf_pembayaran()
+    {
+        $filename = 'data_pembayaran_' . date('Y-m-d') . '.pdf';
+        $pembayaran = new Pembayaran();
+        $data = [
+            'pembayaran' => $pembayaran->findAll(),
+            'title' => 'Data Pembayaran',
+        ];
+        $dompdf = new Dompdf();
+        $html = view('admin/pdf_pembayaran', $data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream($filename, ['Attachment' => false]);
+    }
+    public function data_angsuran()
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'title' => 'Data Angsuran',
+            'pembayaran' => $pembayaran->where('status_pembayaran', 'BELUM LUNAS')->findAll(),
+        ];
+        return view('/admin/data_angsuran', $data);
     }
 }

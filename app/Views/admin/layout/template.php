@@ -26,7 +26,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
                             <a href="/">
-                                <h3>E-SPP</h3>
+                                <h6>Sistem Informasi Pembayaran SPP</h6>
                             </a>
                         </div>
                         <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
@@ -85,6 +85,12 @@
                             <a href="<?= base_url('/admin/input_pembayaran') ?>" class="sidebar-link">
                                 <i class="bi bi-file-earmark-diff-fill"></i>
                                 <span>Input Pembayaran</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="<?= base_url('/admin/data_angsuran') ?>" class="sidebar-link">
+                                <i class="bi bi-file-earmark-arrow-up-fill"></i>
+                                <span>Angsuran</span>
                             </a>
                         </li>
                     </ul>
