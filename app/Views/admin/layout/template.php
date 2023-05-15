@@ -54,40 +54,40 @@
                     </div>
                 </div>
                 <div class="sidebar-menu">
-                    <ul class="menu">
+                    <ul class="menu" id="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        <li class="sidebar-item">
+                        <li class="sidebar-item <?= ($title == 'Dashboard') ? 'active' : '' ?>">
                             <a href="<?= base_url('/admin') ?>" class="sidebar-link">
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-item has-sub">
+                        <li class="sidebar-item has-sub <?= ($title == 'Data Siswa' || $title == 'Data Kelas' || $title == 'Data Pembayaran') ? 'active' : '' ?>">
                             <a href="#" class="sidebar-link">
                                 <i class="bi bi-box-fill"></i>
                                 <span>Data Master</span>
                             </a>
 
                             <ul class="submenu">
-                                <li class="submenu-item">
+                                <li class="submenu-item <?= ($title == 'Data Siswa') ? 'active' : '' ?>">
                                     <a href="<?= base_url('/admin/data_siswa') ?>" class="submenu-link">Data Siswa</a>
                                 </li>
-                                <li class="submenu-item">
+                                <li class="submenu-item <?= ($title == 'Data Kelas') ? 'active' : '' ?>">
                                     <a href="<?= base_url('/admin/data_kelas') ?>" class="submenu-link">Data Kelas</a>
                                 </li>
-                                <li class="submenu-item">
+                                <li class="submenu-item <?= ($title == 'Data Pembayaran') ? 'active' : '' ?>">
                                     <a href="<?= base_url('/admin/data_pembayaran') ?>" class="submenu-link">Data Pembayaran</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item <?= ($title == 'Input Pembayaran') ? 'active' : '' ?>">
                             <a href="<?= base_url('/admin/input_pembayaran') ?>" class="sidebar-link">
                                 <i class="bi bi-file-earmark-diff-fill"></i>
                                 <span>Input Pembayaran</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
+                        <li class="sidebar-item <?= ($title == 'Data Angsuran') ? 'active' : '' ?>">
                             <a href="<?= base_url('/admin/data_angsuran') ?>" class="sidebar-link">
                                 <i class="bi bi-file-earmark-arrow-up-fill"></i>
                                 <span>Angsuran</span>
