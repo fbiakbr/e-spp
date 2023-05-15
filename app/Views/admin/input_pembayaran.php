@@ -189,7 +189,6 @@
     let data_kelas = <?= json_encode($kelas) ?>;
 
     let data = [];
-    // change tagihan to idr format
     data_siswa.forEach((siswa) => {
         data_kelas.forEach((kelas) => {
             if (siswa.kelas == kelas.id_kelas) {

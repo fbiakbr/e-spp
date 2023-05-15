@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                         <div class="stats-icon purple mb-2">
-                            <i class="iconly-boldBookmark"></i>
+                            <i class="iconly-boldDiscovery"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -46,7 +46,7 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                         <div class="stats-icon green mb-2">
-                            <i class="iconly-boldAdd-User"></i>
+                            <i class="iconly-boldPaper"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -65,7 +65,7 @@
                 <div class="row">
                     <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                         <div class="stats-icon red mb-2">
-                            <i class="iconly-boldBookmark"></i>
+                            <i class="iconly-boldDocument"></i>
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -78,15 +78,148 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4>Profile Visit</h4>
+                <h4>Jumlah Siswa Berdasarkan Kelas</h4>
             </div>
             <div class="card-body">
-                <div id="chart-profile-visit"></div>
+                <canvas id="chartKelas"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Jumlah Pembayaran Berdasarkan Bulan</h4>
+            </div>
+            <div class="card-body">
+                <canvas id="chartPembayaran"></canvas>
             </div>
         </div>
     </div>
 </div>
-<?= $this->endSection() ?>
+<div>
+    <script src="<?= base_url('/assets/chart.js') ?>"></script>
+    <script>
+        let ckls = document.getElementById('chartKelas');
+        let data_siswa = <?= json_encode($siswa) ?>;
+        let data_kelas = <?= json_encode($kelas) ?>;
+
+        let data = [];
+        data_siswa.forEach((siswa) => {
+            data_kelas.forEach((kelas) => {
+                if (siswa.kelas == kelas.id_kelas) {
+                    kelas.tagihan = kelas.tagihan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    kelas.tagihan = kelas.tagihan.replace(",00", "");
+                    data.push({
+                        nis: siswa.nis,
+                        nama_siswa: siswa.nama_siswa,
+                        kelas: kelas.nama_kelas,
+                        tagihan: "Rp " + kelas.tagihan
+                    });
+                }
+            });
+        });
+
+        let kelas = [];
+        let jumlah = [];
+        data.forEach((item) => {
+            if (kelas.includes(item.kelas)) {
+                let index = kelas.indexOf(item.kelas);
+                jumlah[index] += 1;
+            } else {
+                kelas.push(item.kelas);
+                jumlah.push(1);
+            }
+        });
+
+        let chartKelas = new Chart(ckls, {
+            type: 'bar',
+            data: {
+                labels: kelas,
+                datasets: [{
+                    label: 'Jumlah Siswa',
+                    data: jumlah,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 5
+                        }
+                    }
+                }
+            }
+        });
+
+        let cpmb = document.getElementById('chartPembayaran');
+        let data_pembayaran = <?= json_encode($pembayaran) ?>;
+        console.log(data_pembayaran);
+
+        let bulan = [
+            "JANUARI",
+            "FEBRUARI",
+            "MARET",
+            "APRIL",
+            "MEI",
+            "JUNI",
+            "JULI",
+            "AGUSTUS",
+            "SEPTEMBER",
+            "OKTOBER",
+            "NOVEMBER",
+            "DESEMBER"
+        ];
+        let jumlah_pembayaran = [];
+        bulan.forEach((item) => {
+            let jumlah = 0;
+            data_pembayaran.forEach((pembayaran) => {
+                if (pembayaran.bulan == item) {
+                    jumlah += 1;
+                }
+            });
+            jumlah_pembayaran.push(jumlah);
+        });
+
+        let chartPembayaran = new Chart(cpmb, {
+            type: 'line',
+            data: {
+                labels: bulan,
+                datasets: [{
+                    label: 'Jumlah Pembayaran',
+                    data: jumlah_pembayaran,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 5
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <?= $this->endSection() ?>

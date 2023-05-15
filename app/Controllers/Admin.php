@@ -25,6 +25,9 @@ class Admin extends BaseController
             'jumlah_siswa' => $siswa->countAllResults(),
             'jumlah_pembayaran' => $pembayaran->countAllResults(),
             'jumlah_angsuran' => $pembayaran->where('status_pembayaran', 'BELUM LUNAS')->countAllResults(),
+            'kelas' => $kelas->findAll(),
+            'siswa' => $siswa->findAll(),
+            'pembayaran' => $pembayaran->findAll(),
         ];
         return view('admin/index', $data);
     }
