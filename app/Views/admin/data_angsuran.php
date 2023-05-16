@@ -11,7 +11,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endif; ?>
-                <a href="<?= base_url('/admin/pdf_pembayaran') ?>" class="btn btn-dark mb-3">Export PDF</a>
+                <a href="<?= base_url('/admin/pdf_angsuran') ?>" class="btn btn-dark mb-3">Export PDF</a>
                 <div class="row">
                     <!-- <p class="text-danger fst-italic"><small>* Mohon untuk menginputkan data pembayaran dengan benar.</small></p> -->
                     <!-- <p class="text-danger fst-italic"><small>* Mohon untuk tidak menghapus data pembayaran, jika terjadi kesalahan input, disarankan edit data pembayaran.</small></p> -->
@@ -44,7 +44,7 @@
                                     <td><?= "Rp " . number_format($p['sisa_tagihan'], 0, ',', '.'); ?></td>
                                     <td><?= $p['status_pembayaran']; ?></td>
                                     <td class="text-center">
-                                        <a href="<?= base_url('/admin/edit_pembayaran/' . $p['id_pembayaran']) ?>" class="btn btn-sm btn-primary"><i class="bi bi-check-all">Penuhi Angsuran</i></a>
+                                        <a href="<?= base_url('/admin/angsuran/' . $p['id_pembayaran']) ?>" id="angsuran" class="btn btn-sm btn-primary"><i class="bi bi-check-all"></i> Penuhi Angsuran</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -55,4 +55,24 @@
         </div>
     </div>
 </div>
+<script>
+    let angsuran = document.getElementById('angsuran');
+    angsuran.addEventListener('click', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Anda akan memenuhi angsuran pembayaran ini!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#435ebe',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, saya yakin!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.location.href = angsuran.href;
+            }
+        })
+    })
+</script>
 <?= $this->endSection(); ?>

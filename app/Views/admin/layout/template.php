@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="<?= base_url('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') ?>" />
     <link rel="stylesheet" href="<?= base_url('/assets/compiled/css/table-datatable-jquery.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('/assets/extensions/sweetalert2/sweetalert2.min.css') ?>" />
 </head>
 
 <body>
@@ -63,7 +64,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-item has-sub <?= ($title == 'Data Siswa' || $title == 'Data Kelas' || $title == 'Data Pembayaran') ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub <?= ($title == 'Data Siswa' || $title == 'Data Kelas' || $title == 'Data Pembayaran' || $title == 'Data Pembayaran Lunas') ? 'active' : '' ?>">
                             <a href="#" class="sidebar-link">
                                 <i class="bi bi-box-fill"></i>
                                 <span>Data Master</span>
@@ -78,6 +79,9 @@
                                 </li>
                                 <li class="submenu-item <?= ($title == 'Data Pembayaran') ? 'active' : '' ?>">
                                     <a href="<?= base_url('/admin/data_pembayaran') ?>" class="submenu-link">Data Pembayaran</a>
+                                </li>
+                                <li class="submenu-item <?= ($title == 'Data Pembayaran Lunas') ? 'active' : '' ?>">
+                                    <a href="<?= base_url('/admin/data_pembayaran_lunas') ?>" class="submenu-link">Data Pembayaran Lunas</a>
                                 </li>
                             </ul>
                         </li>
@@ -141,6 +145,11 @@
     <script src="<?= base_url('/assets/extensions/jquery/jquery.min.js') ?>"></script>
     <script src="<?= base_url('/assets/datatables.min.js') ?>"></script>
     <script src="<?= base_url('/assets/static/js/pages/datatables.js') ?>"></script>
+
+
+    <script src="<?= base_url('/assets/extensions/sweetalert2/sweetalert2.min.js') ?>"></script>
+    >
+    <script src="<?= base_url('/assets/static/js/pages/sweetalert2.js') ?>"></script>
 </body>
 
 </html>

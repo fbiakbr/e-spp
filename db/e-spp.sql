@@ -1,0 +1,211 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: May 16, 2023 at 07:37 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `e-spp`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kelas`
+--
+
+CREATE TABLE `kelas` (
+  `id_kelas` int(11) NOT NULL,
+  `nama_kelas` varchar(50) NOT NULL,
+  `tagihan` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kelas`
+--
+
+INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `tagihan`) VALUES
+(1, 'X TJKT 1', 120000),
+(2, 'X TJKT 2', 120000),
+(5, 'X TJKT 3', 120000),
+(6, 'XI TJKT 1', 110000),
+(7, 'XI TJKT 2', 110000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pembayaran`
+--
+
+CREATE TABLE `pembayaran` (
+  `id_pembayaran` int(11) NOT NULL,
+  `nis` varchar(11) NOT NULL,
+  `nama_siswa` varchar(100) NOT NULL,
+  `kelas` varchar(50) NOT NULL,
+  `tagihan` int(11) NOT NULL,
+  `bulan` varchar(50) NOT NULL,
+  `tanggal_pembayaran` date NOT NULL,
+  `jam` time NOT NULL,
+  `jumlah_bayar` int(11) NOT NULL,
+  `sisa_tagihan` int(11) NOT NULL,
+  `kembalian` int(11) NOT NULL,
+  `status_pembayaran` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id_pembayaran`, `nis`, `nama_siswa`, `kelas`, `tagihan`, `bulan`, `tanggal_pembayaran`, `jam`, `jumlah_bayar`, `sisa_tagihan`, `kembalian`, `status_pembayaran`) VALUES
+(24, '6282', 'AHMAD AZRIL AFIF', 'XI TJKT 1', 110000, 'JANUARI', '2023-05-16', '10:30:00', 110000, 0, 0, 'LUNAS'),
+(25, '6283', 'ANGGELI WULAN SAFITRI', 'XI TJKT 1', 110000, 'FEBRUARI', '2023-05-16', '10:43:38', 110000, 0, 0, 'LUNAS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `siswa`
+--
+
+CREATE TABLE `siswa` (
+  `nis` varchar(11) NOT NULL,
+  `nama_siswa` varchar(100) NOT NULL,
+  `kelas` int(11) NOT NULL,
+  `tempat_lahir` varchar(100) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `alamat` text NOT NULL,
+  `no_hp` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `siswa`
+--
+
+INSERT INTO `siswa` (`nis`, `nama_siswa`, `kelas`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `no_hp`) VALUES
+('6120', 'M KHOIRUL ANAM', 7, 'PEKALONGAN', '2000-05-25', 'PEKALONGAN', '08123456789'),
+('6282', 'AHMAD AZRIL AFIF', 6, 'PEKALONGAN', '2003-02-18', 'PEKALONGAN', '08123456789'),
+('6283', 'ANGGELI WULAN SAFITRI', 6, 'PEKALONGAN', '2000-01-09', 'PEKALONGAN', '08123456789'),
+('6284', 'ASSEGAF', 6, 'PEKALONGAN', '2000-04-05', 'PEKALONGAN', '08123456789'),
+('6285', 'DEVI AZIFATUL AZMI', 6, 'PEKALONGAN', '2000-04-06', 'PEKALONGAN', '08123456789'),
+('6286', 'DINA NOVIANA', 6, 'PEKALONGAN', '2000-04-07', 'PEKALONGAN', '08123456789'),
+('6288', 'EMA FATIMATUZZAHRO', 6, 'PEKALONGAN', '2000-04-08', 'PEKALONGAN', '08123456789'),
+('6289', 'FATKHUL MANAN', 6, 'PEKALONGAN', '2000-04-09', 'PEKALONGAN', '08123456789'),
+('6290', 'M FADHIL FERDIANSYAH', 6, 'PEKALONGAN', '2000-04-10', 'PEKALONGAN', '08123456789'),
+('6291', 'M. WILDAN ILMI', 6, 'PEKALONGAN', '2000-04-11', 'PEKALONGAN', '08123456789'),
+('6292', 'M.ANDIKA AL FAIZIN', 6, 'PEKALONGAN', '2000-04-12', 'PEKALONGAN', '08123456789'),
+('6293', 'M.FIKRI ARIS SETIAWAN', 6, 'PEKALONGAN', '2000-04-13', 'PEKALONGAN', '08123456789'),
+('6294', 'M.RIZQI ALFATDILLAH', 6, 'PEKALONGAN', '2000-04-14', 'PEKALONGAN', '08123456789'),
+('6295', 'MAULANA FAJAR RAHMAN SIDIQ', 6, 'PEKALONGAN', '2000-04-15', 'PEKALONGAN', '08123456789'),
+('6296', 'MOHAMMAD ABDUL HALIM', 6, 'PEKALONGAN', '2000-04-16', 'PEKALONGAN', '08123456789'),
+('6297', 'MUHAMAD IPNU FAIQ', 6, 'PEKALONGAN', '2000-04-17', 'PEKALONGAN', '08123456789'),
+('6298', 'MUHAMMAD IQBAL SURYA ADI', 6, 'PEKALONGAN', '2000-04-18', 'PEKALONGAN', '08123456789'),
+('6299', 'NUR HIDAYAH', 6, 'PEKALONGAN', '2000-04-19', 'PEKALONGAN', '08123456789'),
+('6300', 'NURUL ROJAFINA', 6, 'PEKALONGAN', '2000-04-20', 'PEKALONGAN', '08123456789'),
+('6301', 'PANJI SALMAN AL FARISI', 6, 'PEKALONGAN', '2000-04-21', 'PEKALONGAN', '08123456789'),
+('6302', 'REVA OKTAVIA', 6, 'PEKALONGAN', '2000-04-22', 'PEKALONGAN', '08123456789'),
+('6303', 'SASKIA RAYA WULAN', 6, 'PEKALONGAN', '2000-04-23', 'PEKALONGAN', '08123456789'),
+('6304', 'SITI DALILAH MUSTAQIMAH', 6, 'PEKALONGAN', '2000-04-24', 'PEKALONGAN', '08123456789'),
+('6305', 'SULISTIO NUGROHO', 6, 'PEKALONGAN', '2000-04-25', 'PEKALONGAN', '08123456789'),
+('6306', 'TRI ISNAINI', 6, 'PEKALONGAN', '2000-04-26', 'PEKALONGAN', '08123456789'),
+('6307', 'ACHMAD BACHRUL ULUM', 7, 'PEKALONGAN', '2000-04-29', 'PEKALONGAN', '08123456789'),
+('6309', 'ALDO ALDINO FEBRIAN ADHA', 7, 'PEKALONGAN', '2000-04-30', 'PEKALONGAN', '08123456789'),
+('6310', 'ARYA AGUNG PRATAMA', 7, 'PEKALONGAN', '2000-05-01', 'PEKALONGAN', '08123456789'),
+('6311', 'AYU KURNIANINGSIH', 7, 'PEKALONGAN', '2000-05-02', 'PEKALONGAN', '08123456789'),
+('6312', 'DINA FAZA AMALIA', 7, 'PEKALONGAN', '2000-05-03', 'PEKALONGAN', '08123456789'),
+('6313', 'ELA SAFANA', 7, 'PEKALONGAN', '2000-05-04', 'PEKALONGAN', '08123456789'),
+('6314', 'FAREL ALISSANAYA', 7, 'PEKALONGAN', '2000-05-05', 'PEKALONGAN', '08123456789'),
+('6315', 'FRIZY ANANDA', 7, 'PEKALONGAN', '2000-05-06', 'PEKALONGAN', '08123456789'),
+('6316', 'ISTIANA RISQI', 7, 'PEKALONGAN', '2000-05-07', 'PEKALONGAN', '08123456789'),
+('6317', 'M. AUVAL HANA', 7, 'PEKALONGAN', '2000-05-08', 'PEKALONGAN', '08123456789'),
+('6318', 'M.ALEIF FATIH', 7, 'PEKALONGAN', '2000-05-09', 'PEKALONGAN', '08123456789'),
+('6319', 'M.ASYRIL MAULA', 7, 'PEKALONGAN', '2000-05-10', 'PEKALONGAN', '08123456789'),
+('6320', 'M.IBROHIM', 7, 'PEKALONGAN', '2000-05-11', 'PEKALONGAN', '08123456789'),
+('6321', 'M.TAUFIK HIDAYAT', 7, 'PEKALONGAN', '2000-05-12', 'PEKALONGAN', '08123456789'),
+('6322', 'MOHAMAD YUDIS ALFAREZI', 7, 'PEKALONGAN', '2000-05-13', 'PEKALONGAN', '08123456789'),
+('6323', 'MOHAMMAD NURFAHROZI', 7, 'PEKALONGAN', '2000-05-14', 'PEKALONGAN', '08123456789'),
+('6324', 'MUHAMMAD ARJUNNAJAH', 7, 'PEKALONGAN', '2000-05-15', 'PEKALONGAN', '08123456789'),
+('6325', 'MUHAMMAD ZAHRIE TIYYAS HABIBIE', 7, 'PEKALONGAN', '2000-05-16', 'PEKALONGAN', '08123456789'),
+('6326', 'NURJANAH', 7, 'PEKALONGAN', '2000-05-17', 'PEKALONGAN', '08123456789'),
+('6327', 'PUTRI ANDINI', 7, 'PEKALONGAN', '2000-05-18', 'PEKALONGAN', '08123456789'),
+('6328', 'RINA WATI', 7, 'PEKALONGAN', '2000-05-19', 'PEKALONGAN', '08123456789'),
+('6329', 'SAJI TRI WIJOYO', 7, 'PEKALONGAN', '2000-05-20', 'PEKALONGAN', '08123456789'),
+('6330', 'SEPTIA IKFI TANIA', 7, 'PEKALONGAN', '2000-05-21', 'PEKALONGAN', '08123456789'),
+('6331', 'TIWI ARINI', 7, 'PEKALONGAN', '2000-05-22', 'PEKALONGAN', '08123456789'),
+('6332', 'YUSTIFAN ARIF HIDAYATULLAH', 7, 'PEKALONGAN', '2000-05-23', 'PEKALONGAN', '08123456789'),
+('6335', 'NUNUNG NOVIANI', 6, 'PEKALONGAN', '2000-04-27', 'PEKALONGAN', '08123456789'),
+('6337', 'MUHAMMAD GHOZALI', 7, 'PEKALONGAN', '2000-05-24', 'PEKALONGAN', '08123456789'),
+('6340', 'NASRUL ANNAM', 6, 'PEKALONGAN', '2000-04-28', 'PEKALONGAN', '08123456789'),
+('6342', 'VITA NABILA', 7, 'PEKALONGAN', '2000-05-26', 'PEKALONGAN', '08123456789');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `kelas`
+--
+ALTER TABLE `kelas`
+  ADD PRIMARY KEY (`id_kelas`);
+
+--
+-- Indexes for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD PRIMARY KEY (`id_pembayaran`),
+  ADD KEY `nis` (`nis`);
+
+--
+-- Indexes for table `siswa`
+--
+ALTER TABLE `siswa`
+  ADD PRIMARY KEY (`nis`),
+  ADD KEY `kelas` (`kelas`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `kelas`
+--
+ALTER TABLE `kelas`
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `pembayaran`
+--
+ALTER TABLE `pembayaran`
+  ADD CONSTRAINT `pembayaran_ibfk_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`);
+
+--
+-- Constraints for table `siswa`
+--
+ALTER TABLE `siswa`
+  ADD CONSTRAINT `siswa_ibfk_1` FOREIGN KEY (`kelas`) REFERENCES `kelas` (`id_kelas`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

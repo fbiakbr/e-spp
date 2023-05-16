@@ -423,4 +423,77 @@ class Admin extends BaseController
         ];
         return view('/admin/data_angsuran', $data);
     }
+    public function angsuran($id_pembayaran)
+    {
+        $pembayaran = new Pembayaran();
+        $data = $pembayaran->where('id_pembayaran', $id_pembayaran)->first();
+        $pembayaran->save([
+            'id_pembayaran' => $id_pembayaran,
+            'jumlah_bayar' => $data['jumlah_bayar'] + $data['sisa_tagihan'],
+            'sisa_tagihan' => 0,
+            'status_pembayaran' => 'LUNAS',
+        ]);
+        session()->setFlashdata('pesan', 'Angsuran berhasil dipenuhi.');
+        return redirect()->to(base_url('admin/data_angsuran'));
+    }
+    public function pdf_angsuran()
+    {
+        $filename = 'data_angsuran_' . date('Y-m-d') . '.pdf';
+        $pembayaran = new Pembayaran();
+        $data = [
+            'pembayaran' => $pembayaran->where('status_pembayaran', 'BELUM LUNAS')->findAll(),
+            'title' => 'Data Angsuran',
+        ];
+        $dompdf = new Dompdf();
+        $html = view('admin/pdf_angsuran', $data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream($filename, ['Attachment' => false]);
+    }
+    public function data_pembayaran_lunas()
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'title' => 'Data Pembayaran Lunas',
+            'pembayaran' => $pembayaran->where('status_pembayaran', 'LUNAS')->findAll(),
+        ];
+        return view('/admin/data_pembayaran_lunas', $data);
+    }
+    public function pdf_pembayaran_lunas()
+    {
+        $filename = 'data_pembayaran_lunas_' . date('Y-m-d') . '.pdf';
+        $pembayaran = new Pembayaran();
+        $data = [
+            'pembayaran' => $pembayaran->where('status_pembayaran', 'LUNAS')->findAll(),
+        ];
+        $dompdf = new Dompdf();
+        $html = view('admin/pdf_pembayaran_lunas', $data);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream($filename, ['Attachment' => false]);
+    }
+    public function invoice($id_pembayaran)
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'title' => 'Invoice-' . $id_pembayaran,
+            'pembayaran' => $pembayaran->where('id_pembayaran', $id_pembayaran)->first(),
+        ];
+        $dompdf = new Dompdf();
+        $html = view('admin/invoice', $data);
+        $dompdf->loadHtml($html);
+        $customPaper = array(0, 0, 400, 400);
+        $dompdf->setPaper($customPaper);
+        $dompdf->render();
+        $dompdf->stream('invoice-' . $id_pembayaran . '.pdf', ['Attachment' => false]);
+    }
+    public function login()
+    {
+        $data = [
+            'title' => 'Login',
+        ];
+        return view('login', $data);
+    }
 }

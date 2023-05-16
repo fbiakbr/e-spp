@@ -112,5 +112,20 @@
     document.getElementById('reset').addEventListener('click', function() {
         document.querySelector('form').reset();
     });
+    let form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Berhasil!',
+            text: 'Data siswa berhasil ditambahkan.',
+            icon: 'success',
+            confirmButtonColor: '#3950a2',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        })
+    });
 </script>
 <?= $this->endSection(); ?>

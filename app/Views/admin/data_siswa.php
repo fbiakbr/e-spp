@@ -15,7 +15,7 @@
                 <a href="<?= base_url('/admin/import_siswa') ?>" class="btn btn-success mb-3">Import Siswa</a>
                 <a href="<?= base_url('/admin/pdf_siswa') ?>" class="btn btn-dark mb-3">Export PDF</a>
                 <div class="row">
-                    <p class="fst-italic"><small class="text-danger">* Mohon untuk tidak menghapus data siswa yang sudah ada, karena data siswa yang sudah ada akan digunakan untuk pembayaran.</small></p>
+                    <p class="fst-italic"><small class="text-danger">* Mohon untuk tidak menghapus data siswa yang sudah ada, karena data siswa yang sudah ada. digunakan untuk pembayaran.</small></p>
                     <p class="fst-italic"><small class="text-danger">* Jika ada kesalahan dalam penginputan data siswa, silahkan edit data siswa yang bersangkutan.</small></p>
                 </div>
                 <div class="row table-responsive pb-3">
@@ -45,7 +45,7 @@
                                     <td><?= $s['no_hp']; ?></td>
                                     <td class="text-center" width="10%">
                                         <a href="<?= base_url('/admin/edit_siswa/' . $s['nis']) ?>" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="<?= base_url('/admin/hapus_siswa/' . $s['nis']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah anda yakin?')"><i class="bi bi-trash"></i></a>
+                                        <a href="<?= base_url('/admin/hapus_siswa/' . $s['nis']) ?>" id="hapus_siswa" class="btn btn-sm btn-danger" onclick="hapusSiswa(event)"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -56,4 +56,25 @@
         </div>
     </div>
 </div>
+<script>
+    let hapus_siswa = document.getElementById('hapus_siswa');
+
+    function hapusSiswa(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Data siswa akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#bb2d3b',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.location.href = hapus_siswa.href;
+            }
+        })
+    }
+</script>
 <?= $this->endSection(); ?>

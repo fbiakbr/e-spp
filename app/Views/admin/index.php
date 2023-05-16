@@ -142,12 +142,8 @@
                     label: 'Jumlah Siswa',
                     data: jumlah,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)'
+                        'rgb(150, 148, 255)',
+                        'rgb(255, 121, 118)'
                     ],
                     borderWidth: 1
                 }]
@@ -201,10 +197,10 @@
                     label: 'Jumlah Pembayaran',
                     data: jumlah_pembayaran,
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)'
+                        'rgb(67, 94, 190)'
                     ],
                     borderColor: [
-                        'rgba(54, 162, 235, 1)'
+                        'rgba(67, 94, 190, 0.5)'
                     ],
                     tension: 0.1
                 }]

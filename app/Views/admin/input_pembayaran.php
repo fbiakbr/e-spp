@@ -280,5 +280,28 @@
             kembalian.value = kembalianValueIDR;
         }
     });
+
+    let form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+        if (nis.value == '' || nama_siswa.value == '' || kelas.value == '') {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Data siswa tidak ditemukan!',
+                confirmButtonColor: '#3950a2',
+            });
+        } else {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data pembayaran berhasil ditambahkan!',
+                confirmButtonColor: '#3950a2',
+            }).then((result) => {
+                form.submit();
+            });
+        }
+    });
 </script>
 <?= $this->endSection(); ?>
