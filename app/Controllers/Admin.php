@@ -493,7 +493,15 @@ class Admin extends BaseController
     {
         $data = [
             'title' => 'Login',
+            'session' => session(),
+            'validation' => \Config\Services::validation(),
         ];
-        return view('login', $data);
+        return view('admin/login', $data);
+    }
+    public function logout()
+    {
+        $auth = service('authentication');
+        $auth->logout();
+        return redirect()->to(base_url('/admin'));
     }
 }

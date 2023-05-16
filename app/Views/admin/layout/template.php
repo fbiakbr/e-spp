@@ -97,6 +97,12 @@
                                 <span>Angsuran</span>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="<?= base_url('/logout') ?>" id="logout" class="sidebar-link">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -150,6 +156,24 @@
     <script src="<?= base_url('/assets/extensions/sweetalert2/sweetalert2.min.js') ?>"></script>
     >
     <script src="<?= base_url('/assets/static/js/pages/sweetalert2.js') ?>"></script>
+    <script>
+        let logout = document.querySelector('#logout');
+        logout.addEventListener('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Apakah anda yakin ingin keluar?',
+                text: "Anda akan keluar dari sistem!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#435ebe',
+                cancelButtonColor: '#616970'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = logout.getAttribute('href');
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
