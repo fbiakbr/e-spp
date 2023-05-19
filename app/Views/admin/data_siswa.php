@@ -14,6 +14,7 @@
                 <a href="<?= base_url('/admin/tambah_siswa') ?>" class="btn btn-primary mb-3">Tambah Siswa</a>
                 <a href="<?= base_url('/admin/import_siswa') ?>" class="btn btn-success mb-3">Import Siswa</a>
                 <a href="<?= base_url('/admin/pdf_siswa') ?>" class="btn btn-dark mb-3">Export PDF</a>
+                <a href="<?= base_url('/admin/excel_siswa') ?>" class="btn btn-success mb-3">Export Excel</a>
                 <div class="row">
                     <p class="fst-italic"><small class="text-danger">* Mohon untuk tidak menghapus data siswa yang sudah ada, karena data siswa yang sudah ada. digunakan untuk pembayaran.</small></p>
                     <p class="fst-italic"><small class="text-danger">* Jika ada kesalahan dalam penginputan data siswa, silahkan edit data siswa yang bersangkutan.</small></p>

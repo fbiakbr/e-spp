@@ -12,10 +12,7 @@
                     </div>
                 <?php endif; ?>
                 <a href="<?= base_url('/admin/pdf_angsuran') ?>" class="btn btn-dark mb-3">Export PDF</a>
-                <div class="row">
-                    <!-- <p class="text-danger fst-italic"><small>* Mohon untuk menginputkan data pembayaran dengan benar.</small></p> -->
-                    <!-- <p class="text-danger fst-italic"><small>* Mohon untuk tidak menghapus data pembayaran, jika terjadi kesalahan input, disarankan edit data pembayaran.</small></p> -->
-                </div>
+                <a href="<?= base_url('/admin/excel_angsuran') ?>" class="btn btn-success mb-3">Export Excel</a>
                 <div class="row pb-3 table-responsive">
                     <table class="table table-bordered" id="table1">
                         <thead>

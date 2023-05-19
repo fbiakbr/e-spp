@@ -13,6 +13,7 @@
                 <?php endif; ?>
                 <a href="<?= base_url('/admin/input_pembayaran') ?>" class="btn btn-primary mb-3">Input Pembayaran</a>
                 <a href="<?= base_url('/admin/pdf_pembayaran') ?>" class="btn btn-dark mb-3">Export PDF</a>
+                <a href="<?= base_url('/admin/excel_pembayaran') ?>" class="btn btn-success mb-3">Export Excel</a>
                 <div class="row">
                     <p class="text-danger fst-italic"><small>* Mohon untuk menginputkan data pembayaran dengan benar.</small></p>
                     <p class="text-danger fst-italic"><small>* Mohon untuk tidak menghapus data pembayaran, jika terjadi kesalahan input, disarankan edit data pembayaran.</small></p>

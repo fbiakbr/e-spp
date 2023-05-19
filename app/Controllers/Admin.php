@@ -201,6 +201,56 @@ class Admin extends BaseController
         $dompdf->render();
         $dompdf->stream($filename, ['Attachment' => false]);
     }
+    public function excel_siswa()
+    {
+        $siswa = new Siswa();
+        $kelas = new Kelas();
+        $data = [];
+        $siswa = $siswa->findAll();
+        foreach ($siswa as $s) {
+            $data[] = [
+                'nis' => $s['nis'],
+                'nama_siswa' => $s['nama_siswa'],
+                'kelas' => $kelas->where('id_kelas', $s['kelas'])->first()['nama_kelas'],
+                'tempat_lahir' => $s['tempat_lahir'],
+                'tanggal_lahir' => $s['tanggal_lahir'],
+                'no_hp' => $s['no_hp'],
+                'alamat' => $s['alamat'],
+            ];
+        }
+        $data = [
+            'title' => 'Data Siswa',
+            'siswa' => $data,
+        ];
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'NIS')
+            ->setCellValue('B1', 'Nama')
+            ->setCellValue('C1', 'Kelas')
+            ->setCellValue('D1', 'Tempat Lahir')
+            ->setCellValue('E1', 'Tanggal Lahir')
+            ->setCellValue('F1', 'No HP')
+            ->setCellValue('G1', 'Alamat');
+
+        $column = 2;
+        foreach ($data['siswa'] as $s) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $column, $s['nis'])
+                ->setCellValue('B' . $column, $s['nama_siswa'])
+                ->setCellValue('C' . $column, $s['kelas'])
+                ->setCellValue('D' . $column, $s['tempat_lahir'])
+                ->setCellValue('E' . $column, date('d-m-Y', strtotime($s['tanggal_lahir'])))
+                ->setCellValue('F' . $column, $s['no_hp'])
+                ->setCellValue('G' . $column, $s['alamat']);
+            $column++;
+        }
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'data_siswa_' . date('d-m-Y');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+    }
     public function data_kelas()
     {
         $kelas = new Kelas();
@@ -270,6 +320,32 @@ class Admin extends BaseController
         $dompdf->setPaper('A4', 'potrait');
         $dompdf->render();
         $dompdf->stream($filename, ['Attachment' => false]);
+    }
+    public function excel_kelas()
+    {
+        $kelas = new Kelas();
+        $data = [
+            'kelas' => $kelas->findAll(),
+            'title' => 'Data Kelas',
+        ];
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Nama Kelas')
+            ->setCellValue('B1', 'Tagihan');
+
+        $column = 2;
+        foreach ($data['kelas'] as $k) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $column, $k['nama_kelas'])
+                ->setCellValue('B' . $column, $k['tagihan']);
+            $column++;
+        }
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'data_kelas_' . date('Y-m-d');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
     public function input_pembayaran()
     {
@@ -414,6 +490,50 @@ class Admin extends BaseController
         $dompdf->render();
         $dompdf->stream($filename, ['Attachment' => false]);
     }
+    public function excel_pembayaran()
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'pembayaran' => $pembayaran->findAll(),
+            'title' => 'Data Pembayaran',
+        ];
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Tanggal Pembayaran')
+            ->setCellValue('B1', 'Jam')
+            ->setCellValue('C1', 'NIS')
+            ->setCellValue('D1', 'Nama Siswa')
+            ->setCellValue('E1', 'Kelas')
+            ->setCellValue('F1', 'Tagihan')
+            ->setCellValue('G1', 'Bulan')
+            ->setCellValue('H1', 'Jumlah Bayar')
+            ->setCellValue('I1', 'Sisa Tagihan')
+            ->setCellValue('J1', 'Kembalian')
+            ->setCellValue('K1', 'Status Pembayaran');
+
+        $column = 2;
+        foreach ($data['pembayaran'] as $p) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $column, date('d-m-Y', strtotime($p['tanggal_pembayaran'])))
+                ->setCellValue('B' . $column, $p['jam'])
+                ->setCellValue('C' . $column, $p['nis'])
+                ->setCellValue('D' . $column, $p['nama_siswa'])
+                ->setCellValue('E' . $column, $p['kelas'])
+                ->setCellValue('F' . $column, $p['tagihan'])
+                ->setCellValue('G' . $column, $p['bulan'])
+                ->setCellValue('H' . $column, $p['jumlah_bayar'])
+                ->setCellValue('I' . $column, $p['sisa_tagihan'])
+                ->setCellValue('J' . $column, $p['kembalian'])
+                ->setCellValue('K' . $column, $p['status_pembayaran']);
+            $column++;
+        }
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'data_pembayaran_' . date('Y-m-d');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+    }
     public function data_angsuran()
     {
         $pembayaran = new Pembayaran();
@@ -451,6 +571,40 @@ class Admin extends BaseController
         $dompdf->render();
         $dompdf->stream($filename, ['Attachment' => false]);
     }
+    public function excel_angsuran()
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'pembayaran' => $pembayaran->where('status_pembayaran', 'BELUM LUNAS')->findAll(),
+            'title' => 'Data Angsuran',
+        ];
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Tanggal Pembayaran')
+            ->setCellValue('B1', 'NIS')
+            ->setCellValue('C1', 'Nama Siswa')
+            ->setCellValue('D1', 'Bulan')
+            ->setCellValue('E1', 'Sisa Tagihan')
+            ->setCellValue('F1', 'Status Pembayaran');
+
+        $column = 2;
+        foreach ($data['pembayaran'] as $p) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $column, date('d-m-Y', strtotime($p['tanggal_pembayaran'])))
+                ->setCellValue('B' . $column, $p['nis'])
+                ->setCellValue('C' . $column, $p['nama_siswa'])
+                ->setCellValue('D' . $column, $p['bulan'])
+                ->setCellValue('E' . $column, $p['sisa_tagihan'])
+                ->setCellValue('F' . $column, $p['status_pembayaran']);
+            $column++;
+        }
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'data_angsuran_' . date('Y-m-d');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+    }
     public function data_pembayaran_lunas()
     {
         $pembayaran = new Pembayaran();
@@ -473,6 +627,41 @@ class Admin extends BaseController
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
         $dompdf->stream($filename, ['Attachment' => false]);
+    }
+    public function excel_pembayaran_lunas()
+    {
+        $pembayaran = new Pembayaran();
+        $data = [
+            'pembayaran' => $pembayaran->where('status_pembayaran', 'LUNAS')->findAll(),
+        ];
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'Tanggal Pembayaran')
+            ->setCellValue('B1', 'NIS')
+            ->setCellValue('C1', 'Nama Siswa')
+            ->setCellValue('D1', 'Kelas')
+            ->setCellValue('E1', 'Bulan')
+            ->setCellValue('F1', 'Sisa Tagihan')
+            ->setCellValue('G1', 'Status Pembayaran');
+
+        $column = 2;
+        foreach ($data['pembayaran'] as $p) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $column, date('d-m-Y', strtotime($p['tanggal_pembayaran'])))
+                ->setCellValue('B' . $column, $p['nis'])
+                ->setCellValue('C' . $column, $p['nama_siswa'])
+                ->setCellValue('D' . $column, $p['kelas'])
+                ->setCellValue('E' . $column, $p['bulan'])
+                ->setCellValue('F' . $column, $p['sisa_tagihan'])
+                ->setCellValue('G' . $column, $p['status_pembayaran']);
+            $column++;
+        }
+        $writer = new Xlsx($spreadsheet);
+        $filename = 'data_pembayaran_lunas_' . date('Y-m-d');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
     public function invoice($id_pembayaran)
     {

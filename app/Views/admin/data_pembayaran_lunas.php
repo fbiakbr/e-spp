@@ -12,6 +12,7 @@
                     </div>
                 <?php endif; ?>
                 <a href="<?= base_url('/admin/pdf_pembayaran_lunas') ?>" class="btn btn-dark mb-3">Export PDF</a>
+                <a href="<?= base_url('/admin/excel_pembayaran_lunas') ?>" class="btn btn-success mb-3">Export Excel</a>
                 <div class="row pb-3 table-responsive">
                     <table class="table table-bordered" id="table1">
                         <thead>

@@ -64,7 +64,7 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-item has-sub <?= ($title == 'Data Siswa' || $title == 'Data Kelas' || $title == 'Data Pembayaran' || $title == 'Data Pembayaran Lunas') ? 'active' : '' ?>">
+                        <li class="sidebar-item has-sub <?= ($title == 'Data Siswa' || $title == 'Data Kelas' || $title == 'Data Pembayaran') ? 'active' : '' ?>">
                             <a href="#" class="sidebar-link">
                                 <i class="bi bi-box-fill"></i>
                                 <span>Data Master</span>
@@ -80,15 +80,18 @@
                                 <li class="submenu-item <?= ($title == 'Data Pembayaran') ? 'active' : '' ?>">
                                     <a href="<?= base_url('/admin/data_pembayaran') ?>" class="submenu-link">Data Pembayaran</a>
                                 </li>
-                                <li class="submenu-item <?= ($title == 'Data Pembayaran Lunas') ? 'active' : '' ?>">
-                                    <a href="<?= base_url('/admin/data_pembayaran_lunas') ?>" class="submenu-link">Data Pembayaran Lunas</a>
-                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item <?= ($title == 'Input Pembayaran') ? 'active' : '' ?>">
                             <a href="<?= base_url('/admin/input_pembayaran') ?>" class="sidebar-link">
                                 <i class="bi bi-file-earmark-diff-fill"></i>
                                 <span>Input Pembayaran</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item <?= ($title == 'Data Pembayaran Lunas') ? 'active' : '' ?>">
+                            <a href="<?= base_url('/admin/data_pembayaran_lunas') ?>" class="sidebar-link">
+                                <i class="bi bi-file-earmark-arrow-up-fill"></i>
+                                <span>Pembayaran Lunas</span>
                             </a>
                         </li>
                         <li class="sidebar-item <?= ($title == 'Data Angsuran') ? 'active' : '' ?>">

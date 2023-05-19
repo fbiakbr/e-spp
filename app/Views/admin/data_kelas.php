@@ -13,6 +13,7 @@
                 <?php endif; ?>
                 <a href="<?= base_url('/admin/tambah_kelas') ?>" class="btn btn-primary mb-3">Tambah Kelas</a>
                 <a href="<?= base_url('/admin/pdf_kelas') ?>" class="btn btn-dark mb-3">Export PDF</a>
+                <a href="<?= base_url('/admin/excel_kelas') ?>" class="btn btn-success mb-3">Export Excel</a>
                 <div class="row table-responsive">
                     <table class="table table-bordered" id="table1">
                         <thead>
