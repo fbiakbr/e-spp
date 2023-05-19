@@ -39,6 +39,9 @@
                         </thead>
                         <tbody>
                             <?php $no = 1;
+                            usort($pembayaran, function ($a, $b) {
+                                return $b['id_pembayaran'] <=> $a['id_pembayaran'];
+                            });
                             foreach ($pembayaran as $p) : ?>
                                 <tr style="width: 1%; white-space: nowrap;">
                                     <td class="text-center"><?= $no++; ?></td>

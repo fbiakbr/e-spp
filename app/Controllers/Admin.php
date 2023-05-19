@@ -351,10 +351,12 @@ class Admin extends BaseController
     {
         $siswa = new Siswa();
         $kelas = new Kelas();
+        $pembayaran = new Pembayaran();
         $data = [
             'title' => 'Input Pembayaran',
             'siswa' => $siswa->findAll(),
             'kelas' => $kelas->findAll(),
+            'pembayaran' => $pembayaran->findAll(),
         ];
         return view('admin/input_pembayaran', $data);
     }
@@ -677,6 +679,19 @@ class Admin extends BaseController
         $dompdf->setPaper($customPaper);
         $dompdf->render();
         $dompdf->stream('invoice-' . $id_pembayaran . '.pdf', ['Attachment' => false]);
+    }
+    public function tagihan_siswa()
+    {
+        $kelas = new Kelas();
+        $siswa = new Siswa();
+        $pembayaran = new Pembayaran();
+        $data = [
+            'title' => 'Tagihan Siswa',
+            'kelas' => $kelas->findAll(),
+            'siswa' => $siswa->findAll(),
+            'pembayaran' => $pembayaran->findAll(),
+        ];
+        return view('admin/tagihan_siswa', $data);
     }
     public function login()
     {

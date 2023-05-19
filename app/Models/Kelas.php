@@ -13,8 +13,8 @@ class Kelas extends Model
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
-    protected $allowedFields    = ['nama_kelas', 'tagihan'];
+protected $protectFields    = true;
+protected $allowedFields    = ['nama_kelas', 'tagihan'];
 
     // Dates
     protected $useTimestamps = false;

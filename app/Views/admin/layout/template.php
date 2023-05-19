@@ -90,7 +90,7 @@
                         </li>
                         <li class="sidebar-item <?= ($title == 'Data Pembayaran Lunas') ? 'active' : '' ?>">
                             <a href="<?= base_url('/admin/data_pembayaran_lunas') ?>" class="sidebar-link">
-                                <i class="bi bi-file-earmark-arrow-up-fill"></i>
+                                <i class="bi bi-file-earmark-check-fill"></i>
                                 <span>Pembayaran Lunas</span>
                             </a>
                         </li>
@@ -98,6 +98,12 @@
                             <a href="<?= base_url('/admin/data_angsuran') ?>" class="sidebar-link">
                                 <i class="bi bi-file-earmark-arrow-up-fill"></i>
                                 <span>Angsuran</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item <?= ($title == 'Tagihan Siswa') ? 'active' : '' ?>">
+                            <a href="<?= base_url('/admin/tagihan_siswa') ?>" class="sidebar-link">
+                                <i class="bi bi-building-exclamation"></i>
+                                <span>Tagihan Siswa</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

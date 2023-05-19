@@ -203,7 +203,7 @@
             }
         });
     });
-    console.log(data);
+    // console.log(data);
 
     nis.addEventListener('keyup', () => {
         let nisValue = nis.value;
@@ -250,14 +250,14 @@
 
         let tagihanValueNumber = tagihanValue.replace('Rp', '');
         tagihanValueNumber = tagihanValueNumber.replace(/\./g, '');
-        console.log(tagihanValueNumber);
+        // console.log(tagihanValueNumber);
 
         let jumlah_bayarValueNumber = jumlah_bayarValue.replace('Rp', '');
         jumlah_bayarValueNumber = jumlah_bayarValueNumber.replace(/\./g, '');
-        console.log(jumlah_bayarValueNumber);
+        // console.log(jumlah_bayarValueNumber);
 
         let sisa_tagihanValue = tagihanValueNumber - jumlah_bayarValueNumber;
-        console.log(sisa_tagihanValue);
+        // console.log(sisa_tagihanValue);
 
         sisa_tagihanValue = "Rp " + sisa_tagihanValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         sisa_tagihan.value = sisa_tagihanValue;
@@ -300,6 +300,21 @@
                 confirmButtonColor: '#3950a2',
             }).then((result) => {
                 form.submit();
+            });
+        }
+        let bulan = document.getElementById('bulan');
+        let bulanValue = bulan.value;
+        let dataBulan = <?= json_encode($pembayaran) ?>;
+        let dataBulanFiltered = dataBulan.filter((pembayaran) => {
+            return pembayaran.bulan == bulanValue;
+        });
+        if (dataBulanFiltered.length > 0) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Data pembayaran bulan ' + bulanValue + ' sudah ada!',
+                confirmButtonColor: '#3950a2',
             });
         }
     });
