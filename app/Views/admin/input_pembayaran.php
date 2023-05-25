@@ -9,18 +9,29 @@
                     <form class="form form-vertical" action="<?= base_url('/admin/save_pembayaran') ?>" method="post">
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
-                                        <label for="nis">NIS</label>
+                                        <label for="nis">ID Card</label>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="NIS" id="nis" name="nis" min="0" autofocus required />
+                                            <input type="password" class="form-control" placeholder="Scan ID Card" id="rfid" name="rfid" min="0" autofocus />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-lock"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group has-icon-left">
+                                        <label for="nis">NIS</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control" placeholder="Masukkan NIS" id="nis" name="nis" min="0" autofocus required />
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-lock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="nama_siswa">Nama Siswa</label>
                                         <div class="position-relative">
@@ -31,7 +42,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="kelas">Kelas</label>
                                         <div class="position-relative">
@@ -181,7 +192,6 @@
         jamInput.value = jam;
     }, 100)
 
-    let nis = document.getElementById('nis');
     let nama_siswa = document.getElementById('nama_siswa');
     let kelas = document.getElementById('kelas');
 
@@ -196,6 +206,7 @@
                 kelas.tagihan = kelas.tagihan.replace(",00", "");
                 data.push({
                     nis: siswa.nis,
+                    rfid: siswa.rfid,
                     nama_siswa: siswa.nama_siswa,
                     kelas: kelas.nama_kelas,
                     tagihan: "Rp " + kelas.tagihan
@@ -203,18 +214,42 @@
             }
         });
     });
-    // console.log(data);
+
+    console.log(data);
+
+    let nis = document.getElementById('nis');
+    let rfid = document.getElementById('rfid');
 
     nis.addEventListener('keyup', () => {
         let nisValue = nis.value;
-        let dataSiswaFiltered = data.filter((siswa) => {
-            return siswa.nis == nisValue;
+        let dataFiltered = data.filter((data) => {
+            return data.nis == nisValue;
         });
-        if (dataSiswaFiltered.length > 0) {
-            nama_siswa.value = dataSiswaFiltered[0].nama_siswa;
-            kelas.value = dataSiswaFiltered[0].kelas;
-            tagihan.value = dataSiswaFiltered[0].tagihan;
+        if (dataFiltered.length > 0) {
+            rfid.value = dataFiltered[0].rfid;
+            nama_siswa.value = dataFiltered[0].nama_siswa;
+            kelas.value = dataFiltered[0].kelas;
+            tagihan.value = dataFiltered[0].tagihan;
         } else {
+            rfid.value = '';
+            nama_siswa.value = '';
+            kelas.value = '';
+            tagihan.value = '';
+        }
+    });
+
+    rfid.addEventListener('keyup', () => {
+        let rfidValue = rfid.value;
+        let dataFiltered = data.filter((data) => {
+            return data.rfid == rfidValue;
+        });
+        if (dataFiltered.length > 0) {
+            nis.value = dataFiltered[0].nis;
+            nama_siswa.value = dataFiltered[0].nama_siswa;
+            kelas.value = dataFiltered[0].kelas;
+            tagihan.value = dataFiltered[0].tagihan;
+        } else {
+            nis.value = '';
             nama_siswa.value = '';
             kelas.value = '';
             tagihan.value = '';

@@ -9,7 +9,18 @@
                     <form class="form form-vertical" action="<?= base_url() ?>/admin/update_siswa/<?= $siswa['nis'] ?>" method="post">
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group has-icon-left">
+                                        <label for="nis">ID Card</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" placeholder="Scan ID Card" id="rfid" name="rfid" value="<?= $siswa['rfid'] ?>" min="0" readonly required />
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-lock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="nis">NIS</label>
                                         <div class="position-relative">
@@ -20,7 +31,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="nama">Nama</label>
                                         <div class="position-relative">
@@ -31,7 +42,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="kelas">Kelas</label>
                                         <div class="position-relative">

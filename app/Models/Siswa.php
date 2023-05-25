@@ -14,7 +14,7 @@ class Siswa extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nis', 'nama_siswa', 'kelas', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'no_hp'];
+    protected $allowedFields    = ['nis', 'rfid', 'nama_siswa', 'kelas', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'no_hp'];
 
     // Dates
     protected $useTimestamps = false;

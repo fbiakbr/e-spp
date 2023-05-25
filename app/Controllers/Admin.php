@@ -56,9 +56,11 @@ class Admin extends BaseController
     }
     public function tambah_siswa()
     {
+        $siswa = new Siswa();
         $kelas = new Kelas();
         $data = [
             'title' => 'Tambah Siswa',
+            'siswa' => $siswa->findAll(),
             'kelas' => $kelas->findAll(),
         ];
         return view('admin/tambah_siswa', $data);
@@ -68,6 +70,7 @@ class Admin extends BaseController
         $siswa = new Siswa();
         $data = [
             'nis' => $this->request->getVar('nis'),
+            'rfid' => $this->request->getVar('rfid'),
             'nama_siswa' => $this->request->getVar('nama_siswa'),
             'kelas' => $this->request->getVar('kelas'),
             'tempat_lahir' => $this->request->getVar('tempat_lahir'),
@@ -103,6 +106,7 @@ class Admin extends BaseController
         $siswa = new Siswa();
         $siswa->save([
             'nis' => $nis,
+            'rfid' => $this->request->getVar('rfid'),
             'nama_siswa' => $this->request->getVar('nama_siswa'),
             'kelas' => $this->request->getVar('kelas'),
             'tempat_lahir' => $this->request->getVar('tempat_lahir'),
@@ -141,12 +145,13 @@ class Admin extends BaseController
         foreach ($sheet as $s) {
             $data[] = [
                 'nis' => $s[0],
-                'nama_siswa' => $s[1],
-                'kelas' => $s[2],
-                'tempat_lahir' => $s[3],
-                'tanggal_lahir' => $s[4],
-                'no_hp' => $s[6],
-                'alamat' => $s[5],
+                'rfid' => $s[1],
+                'nama_siswa' => $s[2],
+                'kelas' => $s[3],
+                'tempat_lahir' => $s[4],
+                'tanggal_lahir' => $s[5],
+                'alamat' => $s[6],
+                'no_hp' => $s[7],
             ];
         }
         $kelas = new Kelas();
@@ -158,6 +163,7 @@ class Admin extends BaseController
             if ($check) {
                 $siswa->save([
                     'nis' => $d['nis'],
+                    'rfid' => $d['rfid'],
                     'nama_siswa' => $d['nama_siswa'],
                     'kelas' => $d['kelas'],
                     'tempat_lahir' => $d['tempat_lahir'],

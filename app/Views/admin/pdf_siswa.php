@@ -27,12 +27,19 @@
                 </thead>
                 <tbody>
                     <?php $no = 1;
+                    array_multisort(
+                        array_column($siswa, 'kelas'),
+                        SORT_ASC,
+                        array_column($siswa, 'nama_siswa'),
+                        SORT_ASC,
+                        $siswa
+                    );
                     foreach ($siswa as $s) : ?>
                         <tr>
                             <td class="text-center"><?= $no++; ?></td>
                             <td><?= $s['nis']; ?></td>
                             <td class="siswa"><?= $s['nama_siswa']; ?></td>
-                            <td><?= $s['kelas']; ?></td>
+                            <td id="kelas"><?= $s['kelas']; ?></td>
                             <td><?= $s['tempat_lahir']; ?></td>
                             <td><?= $s['tanggal_lahir']; ?></td>
                             <td><?= $s['no_hp']; ?></td>
@@ -42,9 +49,6 @@
             </table>
         </div>
     </div>
-    <!-- <footer>
-        <p>SMK Ma'arif NU Tirto &copy; <?= date('Y'); ?></p>
-    </footer> -->
     <style>
         * {
             font-family: Arial, Helvetica, sans-serif;
@@ -69,14 +73,6 @@
         .siswa {
             text-align: left;
             padding-left: 10px;
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: center;
         }
     </style>
 </body>

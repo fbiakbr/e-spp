@@ -9,7 +9,18 @@
                     <form class="form form-vertical" action="<?= base_url('/admin/save_siswa') ?>" method="post">
                         <div class="form-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group has-icon-left">
+                                        <label for="nis">RFID</label>
+                                        <div class="position-relative">
+                                            <input type="password" class="form-control" placeholder="Scan ID Card" id="rfid" name="rfid" autofocus />
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-lock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="nis">NIS</label>
                                         <div class="position-relative">
@@ -20,7 +31,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="nama">Nama</label>
                                         <div class="position-relative">
@@ -31,7 +42,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="kelas">Kelas</label>
                                         <div class="position-relative">
@@ -113,19 +124,53 @@
         document.querySelector('form').reset();
     });
     let form = document.querySelector('form');
+    let siswa = <?= json_encode($siswa); ?>;
+    console.log(siswa);
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        Swal.fire({
-            title: 'Berhasil!',
-            text: 'Data siswa berhasil ditambahkan.',
-            icon: 'success',
-            confirmButtonColor: '#3950a2',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
+        let rfid = document.getElementById('rfid').value;
+        let nis = document.getElementById('nis').value;
+        let nama = document.getElementById('nama').value;
+        let kelas = document.getElementById('kelas').value;
+        let tempat_lahir = document.getElementById('tempat_lahir').value;
+        let tanggal_lahir = document.getElementById('tanggal_lahir').value;
+        let no_hp = document.getElementById('no_hp').value;
+        let alamat = document.getElementById('floatingTextarea').value;
+        let data = {
+            rfid: rfid,
+            nis: nis,
+            nama_siswa: nama,
+            id_kelas: kelas,
+            tempat_lahir: tempat_lahir,
+            tanggal_lahir: tanggal_lahir,
+            no_hp: no_hp,
+            alamat: alamat
+        };
+        let exist = false;
+        siswa.forEach(s => {
+            if (s.rfid == rfid || s.nis == nis) {
+                exist = true;
             }
-        })
+        });
+        if (exist) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'RFID atau NIS sudah terdaftar!',
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Data siswa berhasil ditambahkan!',
+                confirmButtonColor: '#3950a2',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        }
     });
 </script>
 <?= $this->endSection(); ?>

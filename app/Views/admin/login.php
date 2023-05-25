@@ -34,7 +34,7 @@
                             </a>
                         </div>
                     </div>
-                    <h2 class="mt-3">SISTEM PEMBAYARAN SPP <br>SMK MA'ARIF NU TIRTO</h2>
+                    <h3 class="mt-3">SISTEM PEMBAYARAN SPP <br>SMK MA'ARIF NU TIRTO</h3>
                     <p class="auth-subtitle mb-5">
                         Login to your account using username and password
                     </p>
