@@ -340,18 +340,38 @@
         let bulan = document.getElementById('bulan');
         let bulanValue = bulan.value;
         let dataBulan = <?= json_encode($pembayaran) ?>;
-        let dataBulanFiltered = dataBulan.filter((pembayaran) => {
-            return pembayaran.bulan == bulanValue;
-        });
-        if (dataBulanFiltered.length > 0) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Data pembayaran bulan ' + bulanValue + ' sudah ada!',
-                confirmButtonColor: '#3950a2',
+        let dataSiswa = <?= json_encode($siswa) ?>;
+        // cek apakah siswa yang membayar sama dengan siswa yang sudah membayar
+        dataBulan.forEach((data) => {
+            dataSiswa.forEach((siswa) => {
+                if (siswa.nis == nis.value) {
+                    if (data.nis == siswa.nis) {
+                        if (data.bulan == bulanValue) {
+                            e.preventDefault();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Siswa sudah membayar!',
+                                confirmButtonColor: '#3950a2',
+                            });
+                        }
+                    }
+                }
             });
-        }
+        });
+        dataBulan.forEach((data) => {
+            if (data.bulan == bulanValue) {
+                if (data.nis == nis.value) {
+                    e.preventDefault();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Bulan ' + bulanValue + ' sudah dibayar!',
+                        confirmButtonColor: '#3950a2',
+                    });
+                }
+            }
+        });
     });
 </script>
 <?= $this->endSection(); ?>

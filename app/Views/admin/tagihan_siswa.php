@@ -15,28 +15,35 @@
                 <div class=" row pb-3 table-responsive">
                     <table class="table table-bordered" id="table1">
                         <thead>
-                            <tr style="width: 1%; white-space: nowrap;">
+                            <tr style="width: 1%; white-space: nowrap; text-transform: uppercase;">
                                 <th>No</th>
                                 <th>NIS</th>
-                                <th>Nama Siswa</th>
-                                <th>Kelas</th>
-                                <th>Januari</th>
-                                <th>Februari</th>
-                                <th>Maret</th>
-                                <th>April</th>
-                                <th>Mei</th>
-                                <th>Juni</th>
-                                <th>Juli</th>
-                                <th>Agustus</th>
-                                <th>September</th>
-                                <th>Oktober</th>
-                                <th>November</th>
-                                <th>Desember</th>
-                                <th>Total Tagihan</th>
+                                <th>NAMA SISWA</th>
+                                <th>KELAS</th>
+                                <th>JANUARI</th>
+                                <th>FEBRUARI</th>
+                                <th>MARET</th>
+                                <th>APRIL</th>
+                                <th>MEI</th>
+                                <th>JUNI</th>
+                                <th>JULI</th>
+                                <th>AGUSTUS</th>
+                                <th>SEPTEMBER</th>
+                                <th>OKTOBER</th>
+                                <th>NOVEMBER</th>
+                                <th>DESEMBER</th>
+                                <th>TOTAL TAGIHAN</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $no = 1;
+                            array_multisort(
+                                array_column($pembayaran, 'kelas'),
+                                SORT_ASC,
+                                array_column($pembayaran, 'nama_siswa'),
+                                SORT_ASC,
+                                $pembayaran
+                            );
                             $nis = [];
                             foreach ($pembayaran as $p) : ?>
                                 <?php if (!in_array($p['nis'], $nis)) : ?>
@@ -63,7 +70,7 @@
                                         foreach ($sisa_tagihan as $st) {
                                             $total += $st;
                                         } ?>
-                                        <td><?= "Rp " . number_format($total, 0, ',', '.'); ?></td>
+                                        <td class="fw-bold"><?= "Rp " . number_format($total, 0, ',', '.'); ?></td>
                                     </tr>
                                     <?php array_push($nis, $p['nis']); ?>
                                 <?php endif; ?>
@@ -89,5 +96,21 @@
         let year = d.getFullYear();
         let file = XLSX.writeFile(wb, `Data Tagihan Siswa ${date}-${month}-${year}.xlsx`);
     });
+
+    // if tagihan siswa !=0, change background color to red
+    let table = document.getElementById('table1');
+    let tr = table.getElementsByTagName('tr');
+    for (let i = 0; i < tr.length; i++) {
+        let td = tr[i].getElementsByTagName('td');
+        for (let j = 4; j < td.length - 1; j++) {
+            if (td[j].innerHTML != "Rp 0") {
+                td[j].style.backgroundColor = "#cc303f";
+                td[j].style.color = "white";
+            } else if (td[j].innerHTML == "Rp 0") {
+                td[j].style.backgroundColor = "#435ebe";
+                td[j].style.color = "white";
+            }
+        }
+    }
 </script>
 <?= $this->endSection(); ?>
