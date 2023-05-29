@@ -329,6 +329,10 @@
         }
     });
 
+    let saldovalue = saldo.value;
+    let saldoValueNumber = saldovalue.replace('Rp', '');
+    saldoValueNumber = saldoValueNumber.replace(/\./g, '');
+
     let form = document.querySelector('form');
     form.addEventListener('submit', (e) => {
         if (nis.value == '' || nama_siswa.value == '' || kelas.value == '') {
@@ -337,6 +341,22 @@
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Data siswa tidak ditemukan!',
+                confirmButtonColor: '#3950a2',
+            });
+        } else if (jumlah_bayar.value > saldovalue) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Saldo tidak mencukupi!',
+                confirmButtonColor: '#3950a2',
+            });
+        } else if (saldovalue < tagihan.value) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Saldo tidak mencukupi!',
                 confirmButtonColor: '#3950a2',
             });
         } else {
