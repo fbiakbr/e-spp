@@ -55,7 +55,18 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
+                                    <div class="form-group has-icon-left">
+                                        <label for="tanggal">Saldo</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control" id="saldo" name="saldo" placeholder="Saldo" readonly required />
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-currency-dollar"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="tanggal">Tanggal Pembayaran</label>
                                         <div class="position-relative">
@@ -66,7 +77,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="bulan">Bulan</label>
                                         <div class="position-relative">
@@ -91,7 +102,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group has-icon-left">
                                         <label for="jam">Jam</label>
                                         <div class="position-relative">
@@ -131,17 +142,6 @@
                                         <label for="sisa_tagihan">Sisa Tagihan</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" placeholder="0" id="sisa_tagihan" name="sisa_tagihan" readonly required />
-                                            <div class="form-control-icon">
-                                                <i class="bi bi-currency-dollar"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group has-icon-left">
-                                        <label for="kembalian">Kembalian</label>
-                                        <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="0" id="kembalian" name="kembalian" readonly required />
                                             <div class="form-control-icon">
                                                 <i class="bi bi-currency-dollar"></i>
                                             </div>
@@ -194,9 +194,11 @@
 
     let nama_siswa = document.getElementById('nama_siswa');
     let kelas = document.getElementById('kelas');
+    let saldo = document.getElementById('saldo');
 
     let data_siswa = <?= json_encode($siswa) ?>;
     let data_kelas = <?= json_encode($kelas) ?>;
+    let data_saldo = <?= json_encode($saldo) ?>;
 
     let data = [];
     data_siswa.forEach((siswa) => {
@@ -209,13 +211,28 @@
                     rfid: siswa.rfid,
                     nama_siswa: siswa.nama_siswa,
                     kelas: kelas.nama_kelas,
-                    tagihan: "Rp " + kelas.tagihan
+                    tagihan: "Rp " + kelas.tagihan,
+                    saldo: data_saldo.saldo
                 });
             }
         });
     });
 
-    console.log(data);
+    // console.log(data);
+
+    data.forEach((data) => {
+        data_saldo.forEach((saldo) => {
+            if (data.nis == saldo.nis) {
+                let saldoValue = saldo.saldo.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                saldoValue = saldoValue.replace(",00", "");
+                data.saldo = "Rp " + saldoValue;
+            } else if (data.saldo == undefined) {
+                data.saldo = "Rp 0";
+            }
+        });
+    });
+
+    // console.log(data);
 
     let nis = document.getElementById('nis');
     let rfid = document.getElementById('rfid');
@@ -230,11 +247,13 @@
             nama_siswa.value = dataFiltered[0].nama_siswa;
             kelas.value = dataFiltered[0].kelas;
             tagihan.value = dataFiltered[0].tagihan;
+            saldo.value = dataFiltered[0].saldo;
         } else {
             rfid.value = '';
             nama_siswa.value = '';
             kelas.value = '';
             tagihan.value = '';
+            saldo.value = '';
         }
     });
 
@@ -248,11 +267,13 @@
             nama_siswa.value = dataFiltered[0].nama_siswa;
             kelas.value = dataFiltered[0].kelas;
             tagihan.value = dataFiltered[0].tagihan;
+            saldo.value = dataFiltered[0].saldo;
         } else {
             nis.value = '';
             nama_siswa.value = '';
             kelas.value = '';
             tagihan.value = '';
+            saldo.value = '';
         }
     });
 
@@ -277,8 +298,6 @@
         return prefix == undefined ? rupiah : rupiah ? 'Rp ' + rupiah : '';
     }
 
-    let sisa_tagihan = document.getElementById('sisa_tagihan');
-    let kembalian = document.getElementById('kembalian');
     jumlah_bayar.addEventListener('keyup', () => {
         let jumlah_bayarValue = jumlah_bayar.value;
         let tagihanValue = tagihan.value;
@@ -291,28 +310,22 @@
         jumlah_bayarValueNumber = jumlah_bayarValueNumber.replace(/\./g, '');
         // console.log(jumlah_bayarValueNumber);
 
+        let sisa_tagihan = document.getElementById('sisa_tagihan');
         let sisa_tagihanValue = tagihanValueNumber - jumlah_bayarValueNumber;
-        // console.log(sisa_tagihanValue);
+        sisa_tagihanValue = sisa_tagihanValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        sisa_tagihanValue = sisa_tagihanValue.replace(",00", "");
+        sisa_tagihan.value = "Rp " + sisa_tagihanValue;
 
-        sisa_tagihanValue = "Rp " + sisa_tagihanValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        sisa_tagihan.value = sisa_tagihanValue;
-
-        let kembalianValue = jumlah_bayarValueNumber - tagihanValueNumber;
-        let kembalianValueIDR = "Rp " + kembalianValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        kembalian.value = kembalianValueIDR;
-
-        if (nis.value == '') {
-            sisa_tagihan.value = '';
-        } else if (jumlah_bayarValue == '') {
-            sisa_tagihan.value = 'Rp 0';
-            kembalian.value = 'Rp 0';
+        if (nis.value == '' || nama_siswa.value == '' || kelas.value == '') {
+            sisa_tagihan.value = "Rp 0";
+        } else if (sisa_tagihanValue == 0) {
+            sisa_tagihan.value = "Rp 0";
         } else if (sisa_tagihanValue < 0) {
-            sisa_tagihan.value = 'Rp 0';
-        } else if (kembalianValue < 0) {
-            kembalian.value = 'Rp 0';
-        } else if (jumlah_bayarValue >= tagihanValueNumber) {
-            sisa_tagihan.value = 'Rp 0';
-            kembalian.value = kembalianValueIDR;
+            sisa_tagihan.value = "Rp 0";
+        } else if (sisa_tagihanValue > 0) {
+            sisa_tagihan.value = "Rp " + sisa_tagihanValue;
+        } else {
+            sisa_tagihan.value = "Rp 0";
         }
     });
 

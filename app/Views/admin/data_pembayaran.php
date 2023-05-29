@@ -32,7 +32,6 @@
                                 <th>Bulan</th>
                                 <th>Jumlah Bayar</th>
                                 <th>Sisa Tagihan</th>
-                                <th>Kembalian</th>
                                 <th>Status Pembayaran</th>
                                 <th>Aksi</th>
                             </tr>
@@ -54,7 +53,6 @@
                                     <td><?= $p['bulan']; ?></td>
                                     <td><?= "Rp " . number_format($p['jumlah_bayar'], 0, ',', '.'); ?></td>
                                     <td><?= "Rp " . number_format($p['sisa_tagihan'], 0, ',', '.'); ?></td>
-                                    <td><?= "Rp " . number_format($p['kembalian'], 0, ',', '.'); ?></td>
                                     <td><?= $p['status_pembayaran']; ?></td>
                                     <td class="text-center">
                                         <a href="<?= base_url('/admin/edit_pembayaran/' . $p['id_pembayaran']) ?>" class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i></a>

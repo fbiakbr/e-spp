@@ -4,8 +4,10 @@ namespace App\Controllers;
 
 use Dompdf\Dompdf;
 use App\Models\Kelas;
+use App\Models\Saldo;
 use App\Models\Siswa;
 use App\Models\Pembayaran;
+use App\Models\Pengeluaran;
 use App\Controllers\BaseController;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -358,11 +360,13 @@ class Admin extends BaseController
         $siswa = new Siswa();
         $kelas = new Kelas();
         $pembayaran = new Pembayaran();
+        $saldo = new Saldo();
         $data = [
             'title' => 'Input Pembayaran',
             'siswa' => $siswa->findAll(),
             'kelas' => $kelas->findAll(),
             'pembayaran' => $pembayaran->findAll(),
+            'saldo' => $saldo->findAll(),
         ];
         return view('admin/input_pembayaran', $data);
     }
@@ -378,6 +382,8 @@ class Admin extends BaseController
     public function save_pembayaran()
     {
         $pembayaran = new Pembayaran();
+        $saldo = new Saldo();
+        $pengeluaran = new Pengeluaran();
         $data = [
             'nis' => $this->request->getVar('nis'),
             'nama_siswa' => $this->request->getVar('nama_siswa'),
@@ -388,7 +394,6 @@ class Admin extends BaseController
             'jam' => $this->request->getVar('jam'),
             'jumlah_bayar' => $this->request->getVar('jumlah_bayar'),
             'sisa_tagihan' => $this->request->getVar('sisa_tagihan'),
-            'kembalian' => $this->request->getVar('kembalian'),
             'status_pembayaran' => $this->request->getVar('status_pembayaran'),
         ];
         $data['tagihan'] = str_replace('Rp ', '', $data['tagihan']);
@@ -400,13 +405,9 @@ class Admin extends BaseController
         $data['sisa_tagihan'] = str_replace('Rp ', '', $data['sisa_tagihan']);
         $data['sisa_tagihan'] = str_replace('.', '', $data['sisa_tagihan']);
 
-        $data['kembalian'] = str_replace('Rp ', '', $data['kembalian']);
-        $data['kembalian'] = str_replace('.', '', $data['kembalian']);
-
         $data['tagihan'] = (int)$data['tagihan'];
         $data['jumlah_bayar'] = (int)$data['jumlah_bayar'];
         $data['sisa_tagihan'] = (int)$data['sisa_tagihan'];
-        $data['kembalian'] = (int)$data['kembalian'];
 
         if ($data['sisa_tagihan'] !== 0) {
             $data['status_pembayaran'] = 'BELUM LUNAS';
@@ -415,6 +416,30 @@ class Admin extends BaseController
         }
         // dd($data);
         $pembayaran->insert($data);
+
+        $data_pengeluaran = [
+            'tgl_pengeluaran' => $this->request->getVar('tanggal_pembayaran'),
+            'jam' => $this->request->getVar('jam'),
+            'nis' => $this->request->getVar('nis'),
+            'nama_siswa' => $this->request->getVar('nama_siswa'),
+            'kelas' => $this->request->getVar('kelas'),
+            'jumlah' => $this->request->getVar('jumlah_bayar'),
+            'keterangan' => 'PEMBAYARAN SPP',
+        ];
+        $data_pengeluaran['jumlah'] = str_replace('Rp ', '', $data_pengeluaran['jumlah']);
+        $data_pengeluaran['jumlah'] = str_replace('.', '', $data_pengeluaran['jumlah']);
+        $data_pengeluaran['jumlah'] = (int)$data_pengeluaran['jumlah'];
+        $pengeluaran->insert($data_pengeluaran);
+
+        $saldo_siswa = $saldo->where('nis', $data['nis'])->first();
+        $id_saldo = $saldo_siswa['id_saldo'];
+        $saldo_siswa = $saldo_siswa['saldo'];
+        $jumlah_bayar = $data['jumlah_bayar'];
+        $saldo_siswa = $saldo_siswa - $jumlah_bayar;
+        $saldo->save([
+            'id_saldo' => $id_saldo,
+            'saldo' => $saldo_siswa,
+        ]);
         session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
         return redirect()->to(base_url('admin/data_pembayaran'));
     }
@@ -453,7 +478,6 @@ class Admin extends BaseController
             'jam' => $this->request->getVar('jam'),
             'jumlah_bayar' => $this->request->getVar('jumlah_bayar'),
             'sisa_tagihan' => $this->request->getVar('sisa_tagihan'),
-            'kembalian' => $this->request->getVar('kembalian'),
             'status_pembayaran' => $this->request->getVar('status_pembayaran'),
         ];
         $data['tagihan'] = str_replace('Rp ', '', $data['tagihan']);
@@ -465,13 +489,9 @@ class Admin extends BaseController
         $data['sisa_tagihan'] = str_replace('Rp ', '', $data['sisa_tagihan']);
         $data['sisa_tagihan'] = str_replace('.', '', $data['sisa_tagihan']);
 
-        $data['kembalian'] = str_replace('Rp ', '', $data['kembalian']);
-        $data['kembalian'] = str_replace('.', '', $data['kembalian']);
-
         $data['tagihan'] = (int)$data['tagihan'];
         $data['jumlah_bayar'] = (int)$data['jumlah_bayar'];
         $data['sisa_tagihan'] = (int)$data['sisa_tagihan'];
-        $data['kembalian'] = (int)$data['kembalian'];
 
         if ($data['sisa_tagihan'] !== 0) {
             $data['status_pembayaran'] = 'BELUM LUNAS';
@@ -516,7 +536,6 @@ class Admin extends BaseController
             ->setCellValue('G1', 'Bulan')
             ->setCellValue('H1', 'Jumlah Bayar')
             ->setCellValue('I1', 'Sisa Tagihan')
-            ->setCellValue('J1', 'Kembalian')
             ->setCellValue('K1', 'Status Pembayaran');
 
         $column = 2;
@@ -531,7 +550,6 @@ class Admin extends BaseController
                 ->setCellValue('G' . $column, $p['bulan'])
                 ->setCellValue('H' . $column, $p['jumlah_bayar'])
                 ->setCellValue('I' . $column, $p['sisa_tagihan'])
-                ->setCellValue('J' . $column, $p['kembalian'])
                 ->setCellValue('K' . $column, $p['status_pembayaran']);
             $column++;
         }
