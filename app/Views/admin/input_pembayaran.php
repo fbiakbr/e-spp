@@ -63,6 +63,7 @@
                                             <div class="form-control-icon">
                                                 <i class="bi bi-currency-dollar"></i>
                                             </div>
+                                            <p class="text-danger"><small id="saldotext"></small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -255,6 +256,25 @@
             tagihan.value = '';
             saldo.value = '';
         }
+        let saldoValue = saldo.value;
+        saldoValue = saldoValue.replace('Rp', '');
+        saldoValue = saldoValue.replace(/\./g, '');
+        saldoValue = parseInt(saldoValue);
+
+        let tagihanValue = tagihan.value;
+        tagihanValue = tagihanValue.replace('Rp', '');
+        tagihanValue = tagihanValue.replace(/\./g, '');
+        tagihanValue = parseInt(tagihanValue);
+
+        if (saldoValue < tagihanValue) {
+            saldo.style.color = 'red';
+            let saldoText = document.getElementById('saldotext');
+            saldoText.innerHTML = 'Silahkan isi saldo terlebih dahulu!';
+        } else {
+            saldo.style.color = 'blue';
+            let saldoText = document.getElementById('saldotext');
+            saldoText.innerHTML = '';
+        }
     });
 
     rfid.addEventListener('keyup', () => {
@@ -274,6 +294,25 @@
             kelas.value = '';
             tagihan.value = '';
             saldo.value = '';
+        }
+        let saldoValue = saldo.value;
+        saldoValue = saldoValue.replace('Rp', '');
+        saldoValue = saldoValue.replace(/\./g, '');
+        saldoValue = parseInt(saldoValue);
+
+        let tagihanValue = tagihan.value;
+        tagihanValue = tagihanValue.replace('Rp', '');
+        tagihanValue = tagihanValue.replace(/\./g, '');
+        tagihanValue = parseInt(tagihanValue);
+
+        if (saldoValue < tagihanValue) {
+            saldo.style.color = 'red';
+            let saldoText = document.getElementById('saldotext');
+            saldoText.innerHTML = 'Silahkan isi saldo terlebih dahulu!';
+        } else {
+            saldo.style.color = 'blue';
+            let saldoText = document.getElementById('saldotext');
+            saldoText.innerHTML = '';
         }
     });
 
@@ -316,6 +355,11 @@
         sisa_tagihanValue = sisa_tagihanValue.replace(",00", "");
         sisa_tagihan.value = "Rp " + sisa_tagihanValue;
 
+        let saldoValue = saldo.value;
+        let saldoValueNumber = saldoValue.replace('Rp', '');
+        saldoValueNumber = saldoValueNumber.replace(/\./g, '');
+        console.log(saldoValueNumber);
+
         if (nis.value == '' || nama_siswa.value == '' || kelas.value == '') {
             sisa_tagihan.value = "Rp 0";
         } else if (sisa_tagihanValue == 0) {
@@ -329,9 +373,19 @@
         }
     });
 
-    let saldovalue = saldo.value;
-    let saldoValueNumber = saldovalue.replace('Rp', '');
+
+    let saldoValue = saldo.value;
+    let saldoValueNumber = saldoValue.replace('Rp', '');
     saldoValueNumber = saldoValueNumber.replace(/\./g, '');
+
+    let tagihanValue = tagihan.value;
+    let tagihanValueNumber = tagihanValue.replace('Rp', '');
+    tagihanValueNumber = tagihanValueNumber.replace(/\./g, '');
+
+    let jumlah_bayarValue = jumlah_bayar.value;
+    let jumlah_bayarValueNumber = jumlah_bayarValue.replace('Rp', '');
+    jumlah_bayarValueNumber = jumlah_bayarValueNumber.replace(/\./g, '');
+
 
     let form = document.querySelector('form');
     form.addEventListener('submit', (e) => {
@@ -343,15 +397,7 @@
                 text: 'Data siswa tidak ditemukan!',
                 confirmButtonColor: '#3950a2',
             });
-        } else if (jumlah_bayar.value > saldovalue) {
-            e.preventDefault();
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Saldo tidak mencukupi!',
-                confirmButtonColor: '#3950a2',
-            });
-        } else if (saldovalue < tagihan.value) {
+        } else if (jumlah_bayarValueNumber > saldoValueNumber || saldoValueNumber < tagihanValueNumber) {
             e.preventDefault();
             Swal.fire({
                 icon: 'error',
@@ -374,7 +420,6 @@
         let bulanValue = bulan.value;
         let dataBulan = <?= json_encode($pembayaran) ?>;
         let dataSiswa = <?= json_encode($siswa) ?>;
-        // cek apakah siswa yang membayar sama dengan siswa yang sudah membayar
         dataBulan.forEach((data) => {
             dataSiswa.forEach((siswa) => {
                 if (siswa.nis == nis.value) {

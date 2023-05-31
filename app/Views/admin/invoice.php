@@ -31,7 +31,7 @@
                     <table>
                         <tr>
                             <td>
-                                Nama : <b><?= $pembayaran['nama_siswa']; ?></b><br> NIS : <b><?= $pembayaran['nis']; ?></b><br> Kelas : <b><?= $pembayaran['kelas']; ?></b><br> Bulan : <b><?= $pembayaran['bulan']; ?></b> <br> Tagihan : <b><?= "Rp. " . number_format($pembayaran['tagihan'], 0, ',', '.'); ?></b> <br> Jumlah Bayar : <b><?= "Rp. " . number_format($pembayaran['jumlah_bayar'], 0, ',', '.'); ?></b> <br> Sisa Tagihan : <b><?= "Rp. " . number_format($pembayaran['sisa_tagihan'], 0, ',', '.'); ?></b> <br> Kembalian : <b><?= "Rp. " . number_format($pembayaran['kembalian'], 0, ',', '.'); ?></b>
+                                Nama : <b><?= $pembayaran['nama_siswa']; ?></b><br> NIS : <b><?= $pembayaran['nis']; ?></b><br> Kelas : <b><?= $pembayaran['kelas']; ?></b><br> Bulan : <b><?= $pembayaran['bulan']; ?></b> <br> Tagihan : <b><?= "Rp. " . number_format($pembayaran['tagihan'], 0, ',', '.'); ?></b> <br> Jumlah Bayar : <b><?= "Rp. " . number_format($pembayaran['jumlah_bayar'], 0, ',', '.'); ?></b> <br> Sisa Tagihan : <b><?= "Rp. " . number_format($pembayaran['sisa_tagihan'], 0, ',', '.'); ?></b> <br>
                             </td>
                         </tr>
                     </table>

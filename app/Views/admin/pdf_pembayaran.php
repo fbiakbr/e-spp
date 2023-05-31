@@ -26,7 +26,6 @@
                         <th>Tagihan</th>
                         <th>Jumlah Bayar</th>
                         <th>Sisa Tagihan</th>
-                        <th>Kembalian</th>
                         <th>Status Pembayaran</th>
                     </tr>
                 </thead>
@@ -44,7 +43,6 @@
                             <td><?= "Rp. " . number_format($p['tagihan'], 0, ',', '.'); ?></td>
                             <td><?= "Rp. " . number_format($p['jumlah_bayar'], 0, ',', '.'); ?></td>
                             <td><?= "Rp. " . number_format($p['sisa_tagihan'], 0, ',', '.'); ?></td>
-                            <td><?= "Rp. " . number_format($p['kembalian'], 0, ',', '.'); ?></td>
                             <td><?= $p['status_pembayaran']; ?></td>
                         </tr>
                     <?php endforeach; ?>
