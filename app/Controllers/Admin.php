@@ -396,6 +396,7 @@ class Admin extends BaseController
             'sisa_tagihan' => $this->request->getVar('sisa_tagihan'),
             'status_pembayaran' => $this->request->getVar('status_pembayaran'),
         ];
+
         $data['tagihan'] = str_replace('Rp ', '', $data['tagihan']);
         $data['tagihan'] = str_replace('.', '', $data['tagihan']);
 
@@ -416,30 +417,33 @@ class Admin extends BaseController
         }
         // dd($data);
         $pembayaran->insert($data);
+        $jenis_pembayaran = $this->request->getVar('jenis_pembayaran');
 
-        $data_pengeluaran = [
-            'tgl_pengeluaran' => $this->request->getVar('tanggal_pembayaran'),
-            'jam' => $this->request->getVar('jam'),
-            'nis' => $this->request->getVar('nis'),
-            'nama_siswa' => $this->request->getVar('nama_siswa'),
-            'kelas' => $this->request->getVar('kelas'),
-            'jumlah' => $this->request->getVar('jumlah_bayar'),
-            'keterangan' => 'PEMBAYARAN SPP',
-        ];
-        $data_pengeluaran['jumlah'] = str_replace('Rp ', '', $data_pengeluaran['jumlah']);
-        $data_pengeluaran['jumlah'] = str_replace('.', '', $data_pengeluaran['jumlah']);
-        $data_pengeluaran['jumlah'] = (int)$data_pengeluaran['jumlah'];
-        $pengeluaran->insert($data_pengeluaran);
+        if ($jenis_pembayaran == 'NON TUNAI') {
+            $data_pengeluaran = [
+                'tgl_pengeluaran' => $this->request->getVar('tanggal_pembayaran'),
+                'jam' => $this->request->getVar('jam'),
+                'nis' => $this->request->getVar('nis'),
+                'nama_siswa' => $this->request->getVar('nama_siswa'),
+                'kelas' => $this->request->getVar('kelas'),
+                'jumlah' => $this->request->getVar('jumlah_bayar'),
+                'keterangan' => 'PEMBAYARAN SPP',
+            ];
+            $data_pengeluaran['jumlah'] = str_replace('Rp ', '', $data_pengeluaran['jumlah']);
+            $data_pengeluaran['jumlah'] = str_replace('.', '', $data_pengeluaran['jumlah']);
+            $data_pengeluaran['jumlah'] = (int)$data_pengeluaran['jumlah'];
+            $pengeluaran->insert($data_pengeluaran);
 
-        $saldo_siswa = $saldo->where('nis', $data['nis'])->first();
-        $id_saldo = $saldo_siswa['id_saldo'];
-        $saldo_siswa = $saldo_siswa['saldo'];
-        $jumlah_bayar = $data['jumlah_bayar'];
-        $saldo_siswa = $saldo_siswa - $jumlah_bayar;
-        $saldo->save([
-            'id_saldo' => $id_saldo,
-            'saldo' => $saldo_siswa,
-        ]);
+            $saldo_siswa = $saldo->where('nis', $data['nis'])->first();
+            $id_saldo = $saldo_siswa['id_saldo'];
+            $saldo_siswa = $saldo_siswa['saldo'];
+            $jumlah_bayar = $data['jumlah_bayar'];
+            $saldo_siswa = $saldo_siswa - $jumlah_bayar;
+            $saldo->save([
+                'id_saldo' => $id_saldo,
+                'saldo' => $saldo_siswa,
+            ]);
+        }
         session()->setFlashdata('pesan', 'Data berhasil ditambahkan.');
         return redirect()->to(base_url('admin/data_pembayaran'));
     }

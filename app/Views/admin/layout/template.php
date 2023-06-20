@@ -26,8 +26,8 @@
                 <div class="sidebar-header position-relative">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="logo">
-                            <a href="/">
-                                <h6>Sistem Informasi Pembayaran SPP</h6>
+                            <a href="#">
+                                <h6>Sistem Pembayaran SPP</h6>
                             </a>
                         </div>
                         <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
@@ -94,12 +94,12 @@
                                 <span>Pembayaran Lunas</span>
                             </a>
                         </li>
-                        <li class="sidebar-item <?= ($title == 'Data Angsuran') ? 'active' : '' ?>">
+                        <!-- <li class="sidebar-item <?= ($title == 'Data Angsuran') ? 'active' : '' ?>">
                             <a href="<?= base_url('/admin/data_angsuran') ?>" class="sidebar-link">
                                 <i class="bi bi-file-earmark-arrow-up-fill"></i>
                                 <span>Angsuran</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="sidebar-item <?= ($title == 'Tagihan Siswa') ? 'active' : '' ?>">
                             <a href="<?= base_url('/admin/tagihan_siswa') ?>" class="sidebar-link">
                                 <i class="bi bi-building-exclamation"></i>

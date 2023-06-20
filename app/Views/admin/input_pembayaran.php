@@ -57,6 +57,20 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group has-icon-left">
+                                        <label for="jenis_pembayaran">Jenis Pembayaran</label>
+                                        <div class="position-relative">
+                                            <select name="jenis_pembayaran" class="form-control form-select" id="jenis_pembayaran" required>
+                                                <option value="NON-TUNAI" id="non-tunai">NON-TUNAI</option>
+                                                <option value="TUNAI" id="tunai">TUNAI</option>
+                                            </select>
+                                            <div class="form-control-icon">
+                                                <i class="bi bi-cash"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" id="saldo_card">
+                                    <div class="form-group has-icon-left">
                                         <label for="tanggal">Saldo</label>
                                         <div class="position-relative">
                                             <input type="text" class="form-control" id="saldo" name="saldo" placeholder="Saldo" readonly required />
@@ -67,7 +81,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2" id="tgl_pembayaran_card">
                                     <div class="form-group has-icon-left">
                                         <label for="tanggal">Tanggal Pembayaran</label>
                                         <div class="position-relative">
@@ -78,7 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2" id="bulan_card">
                                     <div class="form-group has-icon-left">
                                         <label for="bulan">Bulan</label>
                                         <div class="position-relative">
@@ -103,7 +117,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2" id="jam_card">
                                     <div class="form-group has-icon-left">
                                         <label for="jam">Jam</label>
                                         <div class="position-relative">
@@ -152,7 +166,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-primary me-1 mb-1">Bayar</button>
+                            <button id="bayarButton" type="submit" class="btn btn-primary me-1 mb-1">Bayar</button>
                         </div>
                     </form>
                 </div>
@@ -275,6 +289,13 @@
             let saldoText = document.getElementById('saldotext');
             saldoText.innerHTML = '';
         }
+        if (saldo.style.color == 'red') {
+            let bayarButton = document.getElementById('bayarButton');
+            bayarButton.disabled = true;
+        } else {
+            let bayarButton = document.getElementById('bayarButton');
+            bayarButton.disabled = false;
+        }
     });
 
     rfid.addEventListener('keyup', () => {
@@ -313,6 +334,49 @@
             saldo.style.color = 'blue';
             let saldoText = document.getElementById('saldotext');
             saldoText.innerHTML = '';
+        }
+        if (saldo.style.color == 'red') {
+            let bayarButton = document.getElementById('bayarButton');
+            bayarButton.disabled = true;
+        } else {
+            let bayarButton = document.getElementById('bayarButton');
+            bayarButton.disabled = false;
+        }
+    });
+
+    let jenis_pembayaran = document.getElementById('jenis_pembayaran');
+    jenis_pembayaran.addEventListener('change', () => {
+        let jenis_pembayaranValue = jenis_pembayaran.value;
+        if (jenis_pembayaranValue == 'TUNAI') {
+            let saldo_card = document.getElementById('saldo_card');
+            saldo_card.style.display = 'none';
+
+            let tgl_pembayaran_card = document.getElementById('tgl_pembayaran_card');
+            tgl_pembayaran_card.classList.remove('col-md-2');
+            tgl_pembayaran_card.classList.add('col-md-3');
+
+            let bulan_card = document.getElementById('bulan_card');
+            bulan_card.classList.remove('col-md-2');
+            bulan_card.classList.add('col-md-3');
+
+            let jam_card = document.getElementById('jam_card');
+            jam_card.classList.remove('col-md-2');
+            jam_card.classList.add('col-md-3');
+        } else {
+            let saldo_card = document.getElementById('saldo_card');
+            saldo_card.style.display = 'block';
+
+            let tgl_pembayaran_card = document.getElementById('tgl_pembayaran_card');
+            tgl_pembayaran_card.classList.remove('col-md-3');
+            tgl_pembayaran_card.classList.add('col-md-2');
+
+            let bulan_card = document.getElementById('bulan_card');
+            bulan_card.classList.remove('col-md-3');
+            bulan_card.classList.add('col-md-2');
+
+            let jam_card = document.getElementById('jam_card');
+            jam_card.classList.remove('col-md-3');
+            jam_card.classList.add('col-md-2');
         }
     });
 
