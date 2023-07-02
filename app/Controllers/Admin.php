@@ -418,8 +418,8 @@ class Admin extends BaseController
         // dd($data);
         $pembayaran->insert($data);
         $jenis_pembayaran = $this->request->getVar('jenis_pembayaran');
-
-        if ($jenis_pembayaran == 'NON TUNAI') {
+        // dd($jenis_pembayaran);
+        if ($jenis_pembayaran == 'NON-TUNAI') {
             $data_pengeluaran = [
                 'tgl_pengeluaran' => $this->request->getVar('tanggal_pembayaran'),
                 'jam' => $this->request->getVar('jam'),
@@ -703,8 +703,7 @@ class Admin extends BaseController
         $dompdf = new Dompdf();
         $html = view('admin/invoice', $data);
         $dompdf->loadHtml($html);
-        $customPaper = array(0, 0, 400, 400);
-        $dompdf->setPaper($customPaper);
+        $dompdf->setPaper('A5', 'potrait');
         $dompdf->render();
         $dompdf->stream('invoice-' . $id_pembayaran . '.pdf', ['Attachment' => false]);
     }

@@ -15,8 +15,8 @@
                 <p class="text-danger fst-italic">* Untuk kelas, pastikan nama kelas sama seperti yang ada pada sistem. <span class="fw-bold">Contoh : X TJKT 1</span></p>
                 <p class="text-danger fst-italic">* Pastikan format file yang diupload sesuai dengan format yang telah ditentukan.</p>
                 <p class="text-danger fst-italic">* Jika <span class="fw-bold">NIS</span> siswa sudah ada, maka data siswa akan di update sesuai dengan data yang diupload.</p>
-                <a href="/admin/format_excel" class="btn btn-primary">Download Format Excel</a>
-                <form action="/admin/import_excel_siswa" method="post" enctype="multipart/form-data">
+                <a href="<?= base_url('/admin/format_excel') ?>" class="btn btn-primary">Download Format Excel</a>
+                <form action="<?= base_url('/admin/import_excel_siswa') ?>" method="post" enctype="multipart/form-data">
                     <div class="mb-3 mt-3">
                         <label for="file" class="form-label">File Excel</label>
                         <input class="form-control" type="file" id="file_excel" name="file_excel" accept=".xlsx" required>

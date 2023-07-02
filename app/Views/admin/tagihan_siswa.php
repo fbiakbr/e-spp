@@ -12,6 +12,8 @@
                     </div>
                 <?php endif; ?>
                 <button type="button" id="export_excel" class="btn btn-success mb-3">Export Excel</button>
+                <p class="fst-italic text-primary">* Biru = Tagihan Lunas</p>
+                <p class="fst-italic text-danger">* Merah = Tagihan Belum Lunas</p>
                 <div class=" row pb-3 table-responsive">
                     <table class="table table-bordered" id="table1">
                         <thead>

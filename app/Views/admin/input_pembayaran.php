@@ -6,6 +6,10 @@
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
+                    <p class="fst-italic font-semibold text-danger"><small>* Jika pembayaran menggunakan tunai, maka ganti jenis pembayaran menjadi tunai dan isi jumlah bayar sesuai dengan tagihan.</small></p>
+                    <p class="fst-italic font-semibold text-danger"><small>* Jika pembayaran menggunakan non-tunai, maka ganti jenis pembayaran menjadi non-tunai dan isi jumlah bayar sesuai dengan tagihan.</small></p>
+                    <p class="fst-italic font-semibold text-danger"><small>* Jika pembayaran menggunakan non-tunai, tetapi saldo tidak mencukupi, mohon untuk melakukan isi saldo terlebih dahulu.</small></p>
+                    <p class="fst-italic font-semibold text-danger"><small>* Pastikan input jumlah bayar sesuai dengan tagihan.</small></p>
                     <form class="form form-vertical" action="<?= base_url('/admin/save_pembayaran') ?>" method="post">
                         <div class="form-body">
                             <div class="row">
@@ -362,6 +366,9 @@
             let jam_card = document.getElementById('jam_card');
             jam_card.classList.remove('col-md-2');
             jam_card.classList.add('col-md-3');
+
+            let bayarButton = document.getElementById('bayarButton');
+            bayarButton.disabled = false;
         } else {
             let saldo_card = document.getElementById('saldo_card');
             saldo_card.style.display = 'block';
@@ -377,6 +384,21 @@
             let jam_card = document.getElementById('jam_card');
             jam_card.classList.remove('col-md-3');
             jam_card.classList.add('col-md-2');
+
+            let saldoValue = saldo.value;
+            saldoValue = saldoValue.replace('Rp', '');
+            saldoValue = saldoValue.replace(/\./g, '');
+            saldoValue = parseInt(saldoValue);
+
+            let tagihanValue = tagihan.value;
+            tagihanValue = tagihanValue.replace('Rp', '');
+            tagihanValue = tagihanValue.replace(/\./g, '');
+            tagihanValue = parseInt(tagihanValue);
+
+            if (saldoValue < tagihanValue) {
+                let bayaButton = document.getElementById('bayarButton');
+                bayaButton.disabled = true;
+            }
         }
     });
 
